@@ -1,6 +1,15 @@
 package com.example.gh_api.model.entity;
 
-public class Hospede {
 
-    private Pessoa pessoa;
+import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Hospede extends Pessoa {
+
 }
