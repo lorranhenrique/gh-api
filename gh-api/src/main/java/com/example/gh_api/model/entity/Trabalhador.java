@@ -13,6 +13,6 @@ public class Trabalhador extends Pessoa {
 
     @ManyToOne
     private Hotel hotel;
-    @ManyToMany
+    @ManyToOne
     private Cargo cargo;
 }

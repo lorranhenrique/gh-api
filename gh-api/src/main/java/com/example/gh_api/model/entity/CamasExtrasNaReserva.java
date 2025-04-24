@@ -12,7 +12,7 @@ public class CamasExtrasNaReserva {
 
     @ManyToOne
     private Reserva reserva;
-    @ManyToMany
+    @ManyToOne
     private CamaNoHotel camaNoHotel;
     private int quantidade;
 }

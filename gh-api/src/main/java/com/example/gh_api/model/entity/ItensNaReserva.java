@@ -6,13 +6,19 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@MappedSuperclass
+@Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class ItensNaReserva {
+
+    @Id
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
+    private long id;
 
     @ManyToOne
     private Reserva reserva;
-    @OneToMany
-    private Item item;
+    @ManyToOne
+    private ItemNoHotel itemNoHotel;
+    private int quantidade;
 }

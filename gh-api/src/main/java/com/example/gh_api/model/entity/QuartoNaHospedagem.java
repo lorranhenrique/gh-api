@@ -13,6 +13,6 @@ public class QuartoNaHospedagem {
 
     @ManyToOne
     private Hospedagem hospedagem;
-    @OneToMany
+    @ManyToOne
     private Quarto quarto;
 }

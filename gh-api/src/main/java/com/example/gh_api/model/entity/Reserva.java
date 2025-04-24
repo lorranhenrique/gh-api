@@ -17,9 +17,9 @@ public class Reserva {
 
     @ManyToOne
     private Hotel hotel;
-    @ManyToMany
+    @ManyToOne
     private Hospede hospede;
-    @OneToOne
+    @OneToOne (optional = true)
     private Hospedagem hospedagem;
     private String dataChegada;
     private String dataSaida;

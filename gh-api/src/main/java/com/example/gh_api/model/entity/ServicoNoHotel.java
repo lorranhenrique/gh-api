@@ -19,6 +19,6 @@ public class ServicoNoHotel {
 
     @ManyToOne
     private Hotel hotel;
-    @OneToOne
+    @ManyToOne
     private Servico servico;
 }
