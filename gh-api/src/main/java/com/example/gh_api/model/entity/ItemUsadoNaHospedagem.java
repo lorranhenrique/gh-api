@@ -14,7 +14,7 @@ public class ItemUsadoNaHospedagem {
 
     @ManyToOne
     private Hospedagem hospedagem;
-    @ManyToMany
+    @ManyToOne
     private Item item;
     private int quantidade;
 }

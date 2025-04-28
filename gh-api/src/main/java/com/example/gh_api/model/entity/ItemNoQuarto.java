@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ItemNoQuarto {
 
-    @OneToMany
+    @ManyToOne
     private Item item;
-    @ManyToMany
+    @ManyToOne
     private TipoDeQuarto tipoDeQuarto;
     private int quantidade;
 }
