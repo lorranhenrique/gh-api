@@ -1,0 +1,27 @@
+package com.example.gh_api.api.dto;
+
+import com.example.gh_api.model.entity.TipoDeQuarto;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Data;
+import org.modelmapper.ModelMapper;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class TipoDeQuartoDTO {
+
+    private long id;
+    private String tipo;
+    private int quantidadeTotal;
+    private float preco;
+    private int quantidadeCamas;
+    private float tarifaBalcao;
+    private String imagem;
+
+    public static TipoDeQuartoDTO create(TipoDeQuarto tipoDeQuarto) {
+        ModelMapper modelMapper = new ModelMapper();
+        TipoDeQuartoDTO dto = modelMapper.map(tipoDeQuarto, TipoDeQuartoDTO.class);
+        return dto;
+    }
+}
