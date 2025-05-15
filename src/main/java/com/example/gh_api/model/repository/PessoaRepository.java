@@ -1,4 +1,4 @@
-package com.example.gh_api.model.entity.repository;
+package com.example.gh_api.model.repository;
 
 import com.example.gh_api.model.entity.Pessoa;
 import org.springframework.data.jpa.repository.JpaRepository;
