@@ -18,7 +18,7 @@ public class Servico {
 
     private String nome;
     private String descricao;
-    private float preco;
+    private Float preco;
     private String imagem;
-    private int minutosPorAgendamento;
+    private Integer minutosPorAgendamento;
 }
