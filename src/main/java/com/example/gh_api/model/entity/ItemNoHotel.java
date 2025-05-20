@@ -16,8 +16,8 @@ public class ItemNoHotel {
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private long id;
 
-    private int estoque;
-    private float preco;
+    private Integer estoque;
+    private Float preco;
     @ManyToOne
     private Hotel hotel;
     @ManyToOne

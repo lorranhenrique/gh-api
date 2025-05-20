@@ -17,7 +17,7 @@ public class TipoDeCama {
     private long id;
 
     private String tipo;
-    private int quantidade;
-    private int quantidadeAdultos;
-    private int quantidadeCriancas;
+    private Integer quantidade;
+    private Integer quantidadeAdultos;
+    private Integer quantidadeCriancas;
 }
