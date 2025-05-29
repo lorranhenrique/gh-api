@@ -1,4 +1,4 @@
-package com.example.gh_api.api.dto.controller;
+package com.example.gh_api.api.controller;
 
 import com.example.gh_api.api.dto.ServicoDTO;
 
