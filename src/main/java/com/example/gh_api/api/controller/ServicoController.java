@@ -24,9 +24,17 @@ public class ServicoController {
 
     private final ServicoService service;
 
+    @GetMapping()
+    public ResponseEntity get() {
+        List<Servico> servicos = service.getAllServicos();
+        return ResponseEntity.ok(service.stream().map(ServicoDTO::create).collect(Collectors.toList()));
+    }
+
+    /*
     public Servico convert(ServicoDTO dto){
         ModelMapper modelMapper = new ModelMapper();
         Servico servico = modelMapper.map(dto, Servico.class);
         return servico;
     }
+    */
 }
