@@ -14,7 +14,7 @@ public class CamaNoHotel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
+	
     @ManyToOne
     private Hotel hotel;
     @ManyToOne

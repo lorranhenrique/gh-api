@@ -14,7 +14,7 @@ public class Hospedagem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String checkIn;
     private String checkOut;

@@ -8,6 +8,6 @@ class GhApiApplicationTests {
 
 	@Test
 	void contextLoads() {
-	}
+    }
 
 }
