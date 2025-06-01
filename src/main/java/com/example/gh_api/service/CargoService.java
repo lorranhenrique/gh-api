@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.gh_api.model.entity.Cargo;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

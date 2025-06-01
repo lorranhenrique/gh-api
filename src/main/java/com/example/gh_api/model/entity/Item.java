@@ -1,6 +1,6 @@
 package com.example.gh_api.model.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
