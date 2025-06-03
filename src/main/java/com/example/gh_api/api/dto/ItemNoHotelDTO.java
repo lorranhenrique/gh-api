@@ -13,12 +13,18 @@ public class ItemNoHotelDTO {
     private long idItem;
     private String nomeItem;
     private String imagemItem;
+    private String hotel;
+    private float preco;
 
     public static ItemNoHotelDTO create(ItemNoHotel itemNoHotel) {
         ModelMapper modelMapper = new ModelMapper();
         ItemNoHotelDTO dto = modelMapper.map(itemNoHotel, ItemNoHotelDTO.class);
         dto.nomeItem = itemNoHotel.getItem().getNome();
         dto.imagemItem = itemNoHotel.getItem().getImagem();
+        dto.hotel = itemNoHotel.getHotel().getNome();
+        dto.preco = itemNoHotel.getPreco();
+        dto.quantidade = itemNoHotel.getEstoque();
+
         return dto;
     }
 }

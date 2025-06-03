@@ -29,6 +29,19 @@ public class HospedeDTO {
     public static HospedeDTO create(Hospede hospede) {
         ModelMapper modelMapper = new ModelMapper();
         HospedeDTO dto = modelMapper.map(hospede, HospedeDTO.class);
+        dto.nome = hospede.getNome();
+        dto.genero = hospede.getGenero();
+        dto.dataNascimento = hospede.getDataNascimento();
+        dto.telefone = hospede.getTelefone();
+        dto.email = hospede.getEmail();
+        dto.cpf = hospede.getCpf();
+        dto.estado = hospede.getEstado();
+        dto.cidade = hospede.getCidade();
+        dto.cep = hospede.getCep();
+        dto.bairro = hospede.getBairro();
+        dto.logradouro = hospede.getLogradouro();
+        dto.numeroMoradia = hospede.getNumeroMoradia();
+        dto.complemento = hospede.getComplemento();
         return dto;
     }
 }

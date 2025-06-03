@@ -11,21 +11,16 @@ import org.modelmapper.ModelMapper;
 @NoArgsConstructor
 public class CamaNoHotelDTO {
     private long id;
-    private String nome;
-    private String cep;
-    private String estado;
-    private String cidade;
-    private String bairro;
-    private String logradouro;
-    private String numero;
-    private String telefone;
-    private String celular;
-    private String email;
-    private String imagem;
+    private String tipo;
+    private int quantidade;
+    private String hotel;
 
     public static CamaNoHotelDTO create(CamaNoHotel camaNoHotel) {
         ModelMapper modelMapper = new ModelMapper();
         CamaNoHotelDTO dto = modelMapper.map(camaNoHotel, CamaNoHotelDTO.class);
+        dto.tipo = camaNoHotel.getTipoDeCama().getTipo();
+        dto.quantidade = camaNoHotel.getQuantidade();
+        dto.hotel = camaNoHotel.getHotel().getNome();
         return dto;
     }
 }

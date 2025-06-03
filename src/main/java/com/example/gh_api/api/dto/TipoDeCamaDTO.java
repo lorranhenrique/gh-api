@@ -19,6 +19,9 @@ public class TipoDeCamaDTO {
     public static TipoDeCamaDTO create(TipoDeCama tipoDeCama) {
         ModelMapper modelMapper = new ModelMapper();
         TipoDeCamaDTO dto = modelMapper.map(tipoDeCama, TipoDeCamaDTO.class);
+        dto.quantidadeAdultos = tipoDeCama.getQuantidadeAdultos();
+        dto.quantidadeCriancas = tipoDeCama.getQuantidadeCriancas();
+        dto.tipo = tipoDeCama.getTipo();
         return dto;
     }
 }

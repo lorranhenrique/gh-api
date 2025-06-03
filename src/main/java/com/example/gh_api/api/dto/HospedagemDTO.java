@@ -19,13 +19,24 @@ public class HospedagemDTO {
     private int adultos;
     private int criancas;
     private long idHotel;
+    private int quantidadeDeQuartos;
     private String nomeHotel;
+    private String camaExtra;
+    private String itemExtra;
 
     public static HospedagemDTO create(Hospedagem hospedagem) {
         ModelMapper modelMapper = new ModelMapper();
         HospedagemDTO dto = modelMapper.map(hospedagem, HospedagemDTO.class);
         dto.nomeHospede = hospedagem.getHospede().getNome();
         dto.nomeHotel = hospedagem.getHotel().getNome();
+        dto.checkIn = hospedagem.getCheckIn();
+        dto.checkOut = hospedagem.getCheckOut();
+        dto.adultos = hospedagem.getAdultos();
+        dto.criancas = hospedagem.getCriancas();
+        dto.quantidadeDeQuartos = hospedagem.getQuantidadeDeQuartos();
+        dto.camaExtra = hospedagem.getCamasExtrasNaReserva().getCamaNoHotel().getTipoDeCama().getTipo();
+        dto.itemExtra = hospedagem.getItensNaReserva().getItemNoHotel().getItem().getNome();
+
         return dto;
     }
 }

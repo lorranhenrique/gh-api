@@ -27,4 +27,6 @@ public class Agendamento {
     private String data;
     @ManyToOne
     private Servico servico;
+    @OneToOne
+    private Hotel hotel;
 }
