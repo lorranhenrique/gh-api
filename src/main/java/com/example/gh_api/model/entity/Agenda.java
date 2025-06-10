@@ -1,6 +1,6 @@
 package com.example.gh_api.model.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,7 @@ public class Agenda {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private long id;
-
+    
     @ManyToOne
     private ServicoNoHotel servico;
     private String horarioInicio;

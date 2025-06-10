@@ -27,7 +27,7 @@ public class ServicoController {
     @GetMapping()
     public ResponseEntity get() {
         List<Servico> servicos = service.getAllServicos();
-        return ResponseEntity.ok(service.stream().map(ServicoDTO::create).collect(Collectors.toList()));
+        return ResponseEntity.ok(servicos.stream().map(ServicoDTO::create).collect(Collectors.toList()));
     }
 
     /*

@@ -5,7 +5,7 @@ import com.example.gh_api.model.repository.ServicoRepository;
 import org.springframework.stereotype.Service;
 import com.example.gh_api.model.entity.Servico;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

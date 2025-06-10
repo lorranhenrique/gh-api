@@ -24,6 +24,8 @@ public class QuartoDTO {
         QuartoDTO dto = modelMapper.map(quarto, QuartoDTO.class);
         dto.nomeHotel = quarto.getHotel().getNome();
         dto.nomeTipoDeQuarto = quarto.getTipoDeQuarto().getTipo();
+        dto.numero = quarto.getNumero();
+        dto.situacao = quarto.getSituacao();
         return dto;
     }
 }

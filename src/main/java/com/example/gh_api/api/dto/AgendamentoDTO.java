@@ -20,6 +20,7 @@ public class AgendamentoDTO {
     private long idHospedagem;
     private String nomeHospede;
     private String quarto;
+    private String hotel;
 
     public static AgendamentoDTO create(Agendamento agendamento) {
         ModelMapper modelMapper = new ModelMapper();
@@ -27,7 +28,9 @@ public class AgendamentoDTO {
         dto.nomeServico = agendamento.getServico().getNome();
         dto.nomeTrabalhador = agendamento.getTrabalhador().getNome();
         dto.nomeHospede = agendamento.getHospedagem().getHospede().getNome();
-        // quando completar hospedagem, adiciona o quarto aqui
+        dto.quarto = agendamento.getHospedagem().getQuarto().getTipoDeQuarto().getTipo();
+        dto.data = agendamento.getData();
+        dto.hotel = agendamento.getHotel().getNome();
         return dto;
     }
 }

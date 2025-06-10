@@ -21,6 +21,11 @@ public class ServicoDTO {
     public static ServicoDTO create(Servico servico) {
         ModelMapper modelMapper = new ModelMapper();
         ServicoDTO dto = modelMapper.map(servico, ServicoDTO.class);
+        dto.nome = servico.getNome();
+        dto.descricao = servico.getDescricao();
+        dto.preco = servico.getPreco();
+        dto.imagem = servico.getImagem();
+        dto.minutosPorAgendamento = servico.getMinutosPorAgendamento();
         return dto;
     }
 }

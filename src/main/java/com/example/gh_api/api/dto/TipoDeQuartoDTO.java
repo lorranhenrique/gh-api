@@ -22,6 +22,12 @@ public class TipoDeQuartoDTO {
     public static TipoDeQuartoDTO create(TipoDeQuarto tipoDeQuarto) {
         ModelMapper modelMapper = new ModelMapper();
         TipoDeQuartoDTO dto = modelMapper.map(tipoDeQuarto, TipoDeQuartoDTO.class);
+        dto.tipo = tipoDeQuarto.getTipo();
+        dto.quantidadeTotal = tipoDeQuarto.getQuantidadeTotal();
+        dto.preco = tipoDeQuarto.getPreco();
+        dto.quantidadeCamas = tipoDeQuarto.getQuantidadeCamas();
+        dto.tarifaBalcao = tipoDeQuarto.getTarifaBalcao();
+        dto.imagem = tipoDeQuarto.getImagem();
         return dto;
     }
 }

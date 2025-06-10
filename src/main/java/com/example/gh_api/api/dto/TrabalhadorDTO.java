@@ -23,6 +23,9 @@ public class TrabalhadorDTO {
         TrabalhadorDTO dto = modelMapper.map(trabalhador, TrabalhadorDTO.class);
         dto.nomeHotel = trabalhador.getHotel().getNome();
         dto.nomeCargo = trabalhador.getCargo().getNome();
+        dto.nome = trabalhador.getNome();
+        dto.telefone = trabalhador.getTelefone();
+
         return dto;
     }
 }
