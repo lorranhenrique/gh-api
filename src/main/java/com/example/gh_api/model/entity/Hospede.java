@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 public class Hospede extends Pessoa {
 
 }
