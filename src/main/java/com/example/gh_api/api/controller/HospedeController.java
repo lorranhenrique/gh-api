@@ -23,11 +23,6 @@ public class HospedeController {
 
     private final HospedeService service;
 
-    public Hospede convert(HospedeDTO dto){
-        ModelMapper modelMapper = new ModelMapper();
-        Hospede hospede = modelMapper.map(dto, Hospede.class);
-        return hospede;
-    }
 
     @GetMapping()
     public ResponseEntity get(){
@@ -44,5 +39,20 @@ public class HospedeController {
         return ResponseEntity.ok(hospede.map(HospedeDTO::create));
     }
 
+    @PostMapping
+    public ResponseEntity post(@RequestBody HospedeDTO dto){
+        try {
+            Hospede hospede = convert(dto);
+            hospede = service.save(hospede);
+            return new ResponseEntity(HospedeDTO.create(hospede), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
+    public Hospede convert(HospedeDTO dto){
+        ModelMapper modelMapper = new ModelMapper();
+        Hospede hospede = modelMapper.map(dto, Hospede.class);
+        return hospede;
+    }
 }

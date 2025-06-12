@@ -39,6 +39,16 @@ public class HotelController {
         return ResponseEntity.ok(hotel.map(HotelDTO::create));
     }
 
+    @PostMapping
+    public ResponseEntity post(@RequestBody HotelDTO dto) {
+        try {
+            Hotel hotel = convert(dto);
+            hotel = service.save(hotel);
+            return new ResponseEntity(HotelDTO.create(hotel), HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
     public Hotel convert(HotelDTO dto) {
         ModelMapper modelMapper = new ModelMapper();

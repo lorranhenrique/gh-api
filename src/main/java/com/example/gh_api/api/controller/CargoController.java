@@ -24,11 +24,6 @@ public class CargoController {
 
     private final CargoService service;
 
-    public Cargo convert(CargoDTO dto){
-        ModelMapper modelMapper = new ModelMapper();
-        Cargo cargo = modelMapper.map(dto, Cargo.class);
-        return cargo;
-    }
 
     @GetMapping()
     public ResponseEntity get(){
@@ -45,5 +40,21 @@ public class CargoController {
         return ResponseEntity.ok(cargo.map(CargoDTO::create));
     }
 
+    @PostMapping
+    public ResponseEntity post(@RequestBody CargoDTO dto){
+        try {
+            Cargo cargo = convert(dto);
+            cargo = service.save(cargo);
+            return new ResponseEntity(CargoDTO.create(cargo), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public Cargo convert(CargoDTO dto){
+        ModelMapper modelMapper = new ModelMapper();
+        Cargo cargo = modelMapper.map(dto, Cargo.class);
+        return cargo;
+    }
 
 }

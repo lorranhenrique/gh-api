@@ -24,11 +24,6 @@ public class AgendamentoController {
 
     private final AgendamentoService service;
 
-    public Agendamento convert(AgendamentoDTO dto){
-        ModelMapper modelMapper = new ModelMapper();
-        Agendamento agendamento = modelMapper.map(dto, Agendamento.class);
-        return agendamento;
-    }
 
     @GetMapping()
     public ResponseEntity get(){
@@ -45,5 +40,21 @@ public class AgendamentoController {
         return ResponseEntity.ok(agendamento.map(AgendamentoDTO::create));
     }
 
+    @PostMapping
+    public ResponseEntity post(@RequestBody AgendamentoDTO dto){
+        try {
+            Agendamento agendamento = convert(dto);
+            agendamento = service.save(agendamento);
+            return new ResponseEntity(AgendamentoDTO.create(agendamento), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public Agendamento convert(AgendamentoDTO dto){
+        ModelMapper modelMapper = new ModelMapper();
+        Agendamento agendamento = modelMapper.map(dto, Agendamento.class);
+        return agendamento;
+    }
 
 }

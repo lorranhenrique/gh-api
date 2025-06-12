@@ -1,7 +1,7 @@
 package com.example.gh_api.api.controller;
 
 import com.example.gh_api.api.dto.ItemNoHotelDTO;
-
+import com.example.gh_api.exception.RegraNegocioException;
 import com.example.gh_api.model.entity.ItemNoHotel;
 import com.example.gh_api.service.ItemNoHotelService;
 import lombok.RequiredArgsConstructor;
@@ -23,11 +23,6 @@ public class ItemNoHotelController {
 
     private final ItemNoHotelService service;
 
-    public ItemNoHotel convert(ItemNoHotelDTO dto){
-        ModelMapper modelMapper = new ModelMapper();
-        ItemNoHotel itemNoHotel = modelMapper.map(dto, ItemNoHotel.class);
-        return itemNoHotel;
-    }
 
     @GetMapping()
     public ResponseEntity get(){
@@ -44,5 +39,21 @@ public class ItemNoHotelController {
         return ResponseEntity.ok(itemNoHotel.map(ItemNoHotelDTO::create));
     }
 
+    @PostMapping
+    public ResponseEntity post(@RequestBody ItemNoHotelDTO dto){
+        try {           
+            ItemNoHotel itemNoHotel = convert(dto);
+            itemNoHotel = service.save(itemNoHotel);
+            return new ResponseEntity(itemNoHotel, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public ItemNoHotel convert(ItemNoHotelDTO dto){
+        ModelMapper modelMapper = new ModelMapper();
+        ItemNoHotel itemNoHotel = modelMapper.map(dto, ItemNoHotel.class);
+        return itemNoHotel;
+    }
 
 }

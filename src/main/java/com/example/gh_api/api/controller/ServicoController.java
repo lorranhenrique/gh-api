@@ -39,6 +39,16 @@ public class ServicoController {
         return ResponseEntity.ok(servico.map(ServicoDTO::create));
     }
 
+    @PostMapping
+    public ResponseEntity post(@RequestBody ServicoDTO dto) {
+        try {
+            Servico servico = convert(dto);
+            servico = service.save(servico);
+            return new ResponseEntity(ServicoDTO.create(servico), HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
     public Servico convert(ServicoDTO dto){
         ModelMapper modelMapper = new ModelMapper();

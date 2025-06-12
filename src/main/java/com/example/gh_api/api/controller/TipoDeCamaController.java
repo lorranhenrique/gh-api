@@ -1,7 +1,7 @@
 package com.example.gh_api.api.controller;
 
 import com.example.gh_api.api.dto.TipoDeCamaDTO;
-
+import com.example.gh_api.exception.RegraNegocioException;
 import com.example.gh_api.model.entity.TipoDeCama;
 import com.example.gh_api.service.TipoDeCamaService;
 import lombok.RequiredArgsConstructor;
@@ -23,12 +23,6 @@ public class TipoDeCamaController {
 
     private final TipoDeCamaService service;
 
-    public TipoDeCama convert(TipoDeCamaDTO dto){
-        ModelMapper modelMapper = new ModelMapper();
-        TipoDeCama tipoDeCama = modelMapper.map(dto, TipoDeCama.class);
-        return tipoDeCama;
-    }
-
     @GetMapping()
     public ResponseEntity get(){
         List<TipoDeCama> tipoDeCamas = service.getTipoCamas();
@@ -44,5 +38,20 @@ public class TipoDeCamaController {
         return ResponseEntity.ok(tipoDeCama.map(TipoDeCamaDTO::create));
     }
 
+    @PostMapping
+    public ResponseEntity post(@RequestBody TipoDeCamaDTO dto){
+        try {
+            TipoDeCama tipoDeCama = convert(dto);
+            tipoDeCama = service.save(tipoDeCama);
+            return new ResponseEntity(TipoDeCamaDTO.create(tipoDeCama), HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
+    public TipoDeCama convert(TipoDeCamaDTO dto){
+        ModelMapper modelMapper = new ModelMapper();
+        TipoDeCama tipoDeCama = modelMapper.map(dto, TipoDeCama.class);
+        return tipoDeCama;
+    }
 }
