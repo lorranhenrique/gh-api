@@ -49,6 +49,21 @@ public class TipoDeCamaController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody TipoDeCamaDTO dto){
+        if(!service.getTipoCamaById(id).isPresent()){
+            return new ResponseEntity("Tipo de cama não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            TipoDeCama tipoDeCama = convert(dto);
+            tipoDeCama.setId(id);
+            tipoDeCama = service.update(tipoDeCama);
+            return ResponseEntity.ok(TipoDeCamaDTO.create(tipoDeCama));
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public TipoDeCama convert(TipoDeCamaDTO dto){
         ModelMapper modelMapper = new ModelMapper();
         TipoDeCama tipoDeCama = modelMapper.map(dto, TipoDeCama.class);

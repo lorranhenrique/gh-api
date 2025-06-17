@@ -51,6 +51,21 @@ public class CargoController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody CargoDTO dto){
+        if(!service.getCargoById(id).isPresent()){
+            return new ResponseEntity("Cargo não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Cargo cargo = convert(dto);
+            cargo.setId(id);
+            cargo = service.save(cargo);
+            return ResponseEntity.ok(CargoDTO.create(cargo));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public Cargo convert(CargoDTO dto){
         ModelMapper modelMapper = new ModelMapper();
         Cargo cargo = modelMapper.map(dto, Cargo.class);

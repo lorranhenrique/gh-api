@@ -50,6 +50,21 @@ public class ItemNoHotelController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody ItemNoHotelDTO dto){
+        if(!service.getItemById(id).isPresent()){
+            return new ResponseEntity("Item não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            ItemNoHotel itemNoHotel = convert(dto);
+            itemNoHotel.setId(id);
+            itemNoHotel = service.update(itemNoHotel);
+            return ResponseEntity.ok(itemNoHotel);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public ItemNoHotel convert(ItemNoHotelDTO dto){
         ModelMapper modelMapper = new ModelMapper();
         ItemNoHotel itemNoHotel = modelMapper.map(dto, ItemNoHotel.class);

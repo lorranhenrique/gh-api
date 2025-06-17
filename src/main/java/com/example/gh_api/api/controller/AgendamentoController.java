@@ -51,6 +51,21 @@ public class AgendamentoController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody AgendamentoDTO dto){
+        if(!service.getAgendamentoById(id).isPresent()){
+            return new ResponseEntity("Agendamento não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Agendamento agendamento = convert(dto);
+            agendamento.setId(id);
+            agendamento = service.update(agendamento);
+            return ResponseEntity.ok(AgendamentoDTO.create(agendamento));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public Agendamento convert(AgendamentoDTO dto){
         ModelMapper modelMapper = new ModelMapper();
         Agendamento agendamento = modelMapper.map(dto, Agendamento.class);

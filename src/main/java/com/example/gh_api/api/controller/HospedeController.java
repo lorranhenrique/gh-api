@@ -50,6 +50,21 @@ public class HospedeController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody HospedeDTO dto){
+        if(!service.getHospedeById(id).isPresent()){
+            return new ResponseEntity("Hospede não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Hospede hospede = convert(dto);
+            hospede.setId(id);
+            hospede = service.update(hospede);
+            return ResponseEntity.ok(HospedeDTO.create(hospede));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public Hospede convert(HospedeDTO dto){
         ModelMapper modelMapper = new ModelMapper();
         Hospede hospede = modelMapper.map(dto, Hospede.class);

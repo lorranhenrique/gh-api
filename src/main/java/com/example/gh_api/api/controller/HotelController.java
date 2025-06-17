@@ -50,6 +50,21 @@ public class HotelController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody HotelDTO dto) {
+        if(!service.getHotelById(id).isPresent()){
+            return new ResponseEntity("Hotel não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Hotel hotel = convert(dto);
+            hotel.setId(id);
+            hotel = service.save(hotel);
+            return ResponseEntity.ok(HotelDTO.create(hotel));
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public Hotel convert(HotelDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Hotel hotel = modelMapper.map(dto, Hotel.class);
