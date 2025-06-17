@@ -58,7 +58,7 @@ public class ItemNoHotelController {
         try {
             ItemNoHotel itemNoHotel = convert(dto);
             itemNoHotel.setId(id);
-            itemNoHotel = service.update(itemNoHotel);
+            itemNoHotel = service.save(itemNoHotel);
             return ResponseEntity.ok(itemNoHotel);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

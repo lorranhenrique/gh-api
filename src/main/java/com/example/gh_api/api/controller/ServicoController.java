@@ -58,7 +58,7 @@ public class ServicoController {
         try {
             Servico servico = convert(dto);
             servico.setId(id);
-            servico = service.update(servico);
+            servico = service.save(servico);
             return ResponseEntity.ok(ServicoDTO.create(servico));
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

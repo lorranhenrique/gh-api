@@ -57,7 +57,7 @@ public class TipoDeCamaController {
         try {
             TipoDeCama tipoDeCama = convert(dto);
             tipoDeCama.setId(id);
-            tipoDeCama = service.update(tipoDeCama);
+            tipoDeCama = service.save(tipoDeCama);
             return ResponseEntity.ok(TipoDeCamaDTO.create(tipoDeCama));
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

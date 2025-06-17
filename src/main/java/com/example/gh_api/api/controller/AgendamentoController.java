@@ -59,7 +59,7 @@ public class AgendamentoController {
         try {
             Agendamento agendamento = convert(dto);
             agendamento.setId(id);
-            agendamento = service.update(agendamento);
+            agendamento = service.save(agendamento);
             return ResponseEntity.ok(AgendamentoDTO.create(agendamento));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

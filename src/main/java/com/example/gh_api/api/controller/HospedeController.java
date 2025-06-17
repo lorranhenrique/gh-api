@@ -58,7 +58,7 @@ public class HospedeController {
         try {
             Hospede hospede = convert(dto);
             hospede.setId(id);
-            hospede = service.update(hospede);
+            hospede = service.save(hospede);
             return ResponseEntity.ok(HospedeDTO.create(hospede));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
