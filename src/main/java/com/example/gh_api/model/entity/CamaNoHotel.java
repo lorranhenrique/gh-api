@@ -14,10 +14,9 @@ public class CamaNoHotel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-	
     @ManyToOne
     private Hotel hotel;
     @ManyToOne
     private TipoDeCama tipoDeCama;
-    private int quantidade;
+    private Integer quantidade;
 }
