@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -61,6 +62,20 @@ public class TipoDeQuartoController {
             return ResponseEntity.ok(tipoDeQuarto);
         } catch (RegraNegocioException e){
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable("id") long id) {
+        Optional<TipoDeQuarto> tipoDeQuarto = service.getTipoDeQuartoById(id);
+        if(!tipoDeQuarto.isPresent()){
+            return new ResponseEntity("Tipo de quarto não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try{
+            service.delete(tipoDeQuarto.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body("Não foi possível excluir o tipo de quarto: " + e.getMessage());
         }
     }
 

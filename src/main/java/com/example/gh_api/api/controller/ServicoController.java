@@ -65,6 +65,20 @@ public class ServicoController {
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable("id") Long id) {
+        Optional<Servico> servico = service.getServicoById(id);
+        if(!servico.isPresent()){
+            return new ResponseEntity("Serviço não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try{
+            service.delete(servico.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body("Não foi possível excluir o serviço: " + e.getMessage());
+        }
+    }
+
     public Servico convert(ServicoDTO dto){
         ModelMapper modelMapper = new ModelMapper();
         Servico servico = modelMapper.map(dto, Servico.class);

@@ -64,6 +64,20 @@ public class TipoDeCamaController {
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable("id") Long id) {
+        Optional<TipoDeCama> tipoDeCama = service.getTipoCamaById(id);
+        if(!tipoDeCama.isPresent()){
+            return new ResponseEntity("Tipo de cama não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.delete(tipoDeCama.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body("Não foi possível excluir o tipo de cama: " + e.getMessage());
+        }
+    }
+
     public TipoDeCama convert(TipoDeCamaDTO dto){
         ModelMapper modelMapper = new ModelMapper();
         TipoDeCama tipoDeCama = modelMapper.map(dto, TipoDeCama.class);

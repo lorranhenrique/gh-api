@@ -64,6 +64,20 @@ public class QuartoController {
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable("id") Long id) {
+        Optional<Quarto> quarto = service.getQuartoById(id);
+        if(!quarto.isPresent()){
+            return new ResponseEntity("Quarto não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.delete(quarto.get());
+            return new ResponseEntity("Quarto deletado com sucesso", HttpStatus.OK);
+        } catch (RegraNegocioException e){
+            return ResponseEntity.badRequest().body("Não foi possível deletar o quarto: " + e.getMessage());
+        }
+    }
+
     public Quarto convert(QuartoDTO dto){
         ModelMapper modelMapper = new ModelMapper();
         Quarto quarto = modelMapper.map(dto, Quarto.class);

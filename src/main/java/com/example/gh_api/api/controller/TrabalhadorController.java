@@ -64,6 +64,20 @@ public class TrabalhadorController {
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable("id") Long id) {
+        Optional<Trabalhador> trabalhador = service.getTrabalhadorById(id);
+        if(!trabalhador.isPresent()){
+            return new ResponseEntity("Trabalhador não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try{
+            service.delete(trabalhador.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body("Não foi possível excluir o trabalhador: " + e.getMessage());
+        }
+    }
+
     public Trabalhador convert(TrabalhadorDTO dto){
         ModelMapper modelMapper = new ModelMapper();
         Trabalhador trabalhador = modelMapper.map(dto, Trabalhador.class);
