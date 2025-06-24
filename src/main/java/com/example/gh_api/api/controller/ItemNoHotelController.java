@@ -65,6 +65,20 @@ public class ItemNoHotelController {
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<ItemNoHotel> item = service.getItemById(id);
+        if (!item.isPresent()) {
+            return new ResponseEntity("Item não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.delete(item.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body("Não foi possível excluir o item. " + e.getMessage());
+        }
+    }
+
     public ItemNoHotel convert(ItemNoHotelDTO dto){
         ModelMapper modelMapper = new ModelMapper();
         ItemNoHotel itemNoHotel = modelMapper.map(dto, ItemNoHotel.class);

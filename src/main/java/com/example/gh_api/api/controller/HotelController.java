@@ -74,7 +74,7 @@ public class HotelController {
         try {
             service.delete(hotel.get());
             return new ResponseEntity(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
+        } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body("Não foi possível excluir o hotel. " + e.getMessage());
         }
     }

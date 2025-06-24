@@ -64,6 +64,20 @@ public class CamaNoHotelController {
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable("id") Long id) {
+        Optional<CamaNoHotel> camaNoHotel = service.getCamaById(id);
+        if (!camaNoHotel.isPresent()) {
+            return new ResponseEntity("Cama não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.delete(camaNoHotel.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body("Não foi possível excluir a cama. " + e.getMessage());
+        }
+    }
+
     public CamaNoHotel convert(CamaNoHotelDTO dto){
         ModelMapper modelMapper = new ModelMapper();
         CamaNoHotel camaNoHotel = modelMapper.map(dto, CamaNoHotel.class);

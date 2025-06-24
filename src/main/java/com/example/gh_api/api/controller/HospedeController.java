@@ -9,7 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import com.example.gh_api.exception.RegraNegocioException;
 
 import java.util.List;
 import java.util.Optional;
@@ -62,6 +62,20 @@ public class HospedeController {
             return ResponseEntity.ok(HospedeDTO.create(hospede));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Hospede> hospede = service.getHospedeById(id);
+        if (!hospede.isPresent()) {
+            return new ResponseEntity("Hóspede não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.delete(hospede.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body("Não foi possível excluir o hóspede. " + e.getMessage());
         }
     }
 

@@ -1,7 +1,7 @@
 package com.example.gh_api.api.controller;
 
 import com.example.gh_api.api.dto.AgendamentoDTO;
-
+import com.example.gh_api.exception.RegraNegocioException;
 import com.example.gh_api.model.entity.Agendamento;
 import com.example.gh_api.service.AgendamentoService;
 import lombok.RequiredArgsConstructor;
@@ -63,6 +63,20 @@ public class AgendamentoController {
             return ResponseEntity.ok(AgendamentoDTO.create(agendamento));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable("id") Long id) {
+        Optional<Agendamento> agendamento = service.getAgendamentoById(id);
+        if(!agendamento.isPresent()){
+            return new ResponseEntity("Agendamento não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.delete(agendamento.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body("Não foi possível excluir o agendamento. " + e.getMessage());
         }
     }
 
