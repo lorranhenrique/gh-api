@@ -1,6 +1,5 @@
 package com.example.gh_api.model.entity;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,9 +16,9 @@ public class TipoDeQuarto {
     private long id;
 
     private String tipo;
-    private int quantidadeTotal;
-    private float preco;
-    private int quantidadeCamas;
-    private float tarifaBalcao;
+    private Integer quantidadeTotal;
+    private Float preco;
+    private Integer quantidadeCamas;
+    private Float tarifaBalcao;
     private String imagem;
 }
