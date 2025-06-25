@@ -15,14 +15,15 @@ public class Reserva {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    private String dataChegada;
+    private String dataSaida;
+
     @ManyToOne
     private Hotel hotel;
     @ManyToOne
     private Hospede hospede;
     @OneToOne (optional = true)
-    private Hospedagem hospedagem; // acho que vai rodar
-    private String dataChegada;
-    private String dataSaida;
+    private Hospedagem hospedagem; // acho que vai roda
     @ManyToOne
     private TipoDeQuarto tipoDeQuarto;
 }

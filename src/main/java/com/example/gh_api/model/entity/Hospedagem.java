@@ -18,10 +18,10 @@ public class Hospedagem {
 
     private String checkIn;
     private String checkOut;
-    private int adultos;
-    private int criancas;
+    private Integer adultos;
+    private Integer criancas;
     private boolean reserva;
-    private int quantidadeDeQuartos;
+    private Integer quantidadeDeQuartos;
 
     @OneToOne
     private Hospede hospede;
