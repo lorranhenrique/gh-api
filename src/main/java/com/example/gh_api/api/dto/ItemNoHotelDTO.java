@@ -8,9 +8,9 @@ import org.modelmapper.ModelMapper;
 
 public class ItemNoHotelDTO {
 
-    private long id;
+    private Long id;
     private int quantidade;
-    private long idItem;
+    private Long idItem;
     private String nomeItem;
     private String imagemItem;
     private String hotel;

@@ -11,7 +11,7 @@ import org.modelmapper.ModelMapper;
 @NoArgsConstructor
 public class TipoDeCamaDTO {
 
-    private long id;
+    private Long id;
     private String tipo;
     private int quantidadeAdultos;
     private int quantidadeCriancas;

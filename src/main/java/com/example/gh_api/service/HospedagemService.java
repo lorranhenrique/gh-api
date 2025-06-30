@@ -52,15 +52,6 @@ public class HospedagemService {
         if (hospedagem.getQuarto() == null) {
             missingFields.add("quarto");
         }
-        if (hospedagem.getServico() == null) {
-            missingFields.add("servico");
-        }
-        if (hospedagem.getCamasExtrasNaReserva() == null) {
-            missingFields.add("camas extras");
-        }
-        if (hospedagem.getItensNaReserva() == null) {
-            missingFields.add("itens");
-        }
         if(hospedagem.getCheckIn() == null || hospedagem.getCheckIn().trim().equals("")) {
             missingFields.add("check-in");
         }

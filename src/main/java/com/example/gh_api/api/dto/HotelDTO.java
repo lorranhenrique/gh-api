@@ -11,7 +11,7 @@ import org.modelmapper.ModelMapper;
 @NoArgsConstructor
 public class HotelDTO {
 
-    private long id;
+    private Long id;
     private String nome;
     private String cep;
     private String estado;

@@ -11,12 +11,12 @@ import org.modelmapper.ModelMapper;
 @NoArgsConstructor
 public class ServicoDTO {
 
-    private long id;
+    private Long id;
     private String nome;
     private String descricao;
-    private float preco;
+    private Float preco;
     private String imagem;
-    private int minutosPorAgendamento;
+    private Integer minutosPorAgendamento;
 
     public static ServicoDTO create(Servico servico) {
         ModelMapper modelMapper = new ModelMapper();

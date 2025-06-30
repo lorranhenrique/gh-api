@@ -11,7 +11,7 @@ import org.modelmapper.ModelMapper;
 @NoArgsConstructor
 public class TipoDeQuartoDTO {
 
-    private long id;
+    private Long id;
     private String tipo;
     private int quantidadeTotal;
     private float preco;

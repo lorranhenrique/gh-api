@@ -11,7 +11,7 @@ import org.modelmapper.ModelMapper;
 @NoArgsConstructor
 public class HospedeDTO {
 
-    private long id;
+    private Long id;
     private String nome;
     private String genero;
     private String dataNascimento;

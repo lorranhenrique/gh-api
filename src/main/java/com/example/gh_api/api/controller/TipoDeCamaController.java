@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/tipoDeCama")
+@RequestMapping("/api/v1/tiposDeCama")
 @RequiredArgsConstructor
 @CrossOrigin
 public class TipoDeCamaController {
@@ -80,6 +80,8 @@ public class TipoDeCamaController {
 
     public TipoDeCama convert(TipoDeCamaDTO dto){
         ModelMapper modelMapper = new ModelMapper();
+        // Configura o ModelMapper para ignorar ambiguidades, como os campos quantidade, quantidadeAdulto e quantidadeCrianca
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
         TipoDeCama tipoDeCama = modelMapper.map(dto, TipoDeCama.class);
         return tipoDeCama;
     }

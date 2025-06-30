@@ -47,11 +47,11 @@ public class TipoDeCamaService {
             missingFields.add("tipo");
         }
 
-        if (tipoDeCama.getQuantidadeAdultos() == null || tipoDeCama.getQuantidadeAdultos() <= 0) {
+        if (tipoDeCama.getQuantidadeAdultos() == null || tipoDeCama.getQuantidadeAdultos() < 0) {
             missingFields.add("quantidade de adultos");
         }
 
-        if (tipoDeCama.getQuantidadeCriancas() == null || tipoDeCama.getQuantidadeCriancas() <= 0) {
+        if (tipoDeCama.getQuantidadeCriancas() == null || tipoDeCama.getQuantidadeCriancas() < 0) {
             missingFields.add("quantidade de crianças");
         }
 

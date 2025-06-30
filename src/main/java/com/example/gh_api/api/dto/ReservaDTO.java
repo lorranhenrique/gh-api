@@ -12,15 +12,15 @@ import org.modelmapper.ModelMapper;
 @NoArgsConstructor
 public class ReservaDTO {
 
-    private long id;
+    private Long id;
 
-    private long idHotel;
+    private Long idHotel;
     private String hotel;
     private String nomeHotel;
-    private long idHospede;
+    private Long idHospede;
     private String nomeHospedeResponsavel;
-    private long idHospedagem;
-    private long idTipoDeQuarto;
+    private Long idHospedagem;
+    private Long idTipoDeQuarto;
     private String nomeTipoDeQuarto;
     private String dataChegada;
     private String dataSaida;

@@ -10,9 +10,11 @@ import org.modelmapper.ModelMapper;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CamaNoHotelDTO {
-    private long id;
+    private Long id;
+    private Long idTipoDeCama;
     private String tipo;
     private int quantidade;
+    private Long idHotel;
     private String hotel;
 
     public static CamaNoHotelDTO create(CamaNoHotel camaNoHotel) {

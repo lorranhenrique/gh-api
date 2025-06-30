@@ -10,7 +10,7 @@ import org.modelmapper.ModelMapper;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CargoDTO {
-    private long id;
+    private Long id;
     private String nome;
     private String descricao;
 

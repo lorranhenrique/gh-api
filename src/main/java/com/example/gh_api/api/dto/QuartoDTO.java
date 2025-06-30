@@ -11,10 +11,10 @@ import org.modelmapper.ModelMapper;
 @NoArgsConstructor
 public class QuartoDTO {
 
-    private long id;
-    private long idHotel;
+    private Long id;
+    private Long idHotel;
     private String nomeHotel;
-    private long idTipoDeQuarto;
+    private Long idTipoDeQuarto;
     private String nomeTipoDeQuarto;
     private String numero;
     private String situacao;

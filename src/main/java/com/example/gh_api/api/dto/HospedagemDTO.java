@@ -10,19 +10,21 @@ import org.modelmapper.ModelMapper;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HospedagemDTO {
-    private long id;
+    private Long id;
 
     private String checkIn;
     private String checkOut;
-    private long idHospede;
+    private Long idHospede;
     private String nomeHospede;
     private int adultos;
     private int criancas;
-    private long idHotel;
+    private Long idHotel;
     private int quantidadeDeQuartos;
     private String nomeHotel;
     private String camaExtra;
     private String itemExtra;
+    private Long idQuarto;
+    private String numeroQuarto;
 
     public static HospedagemDTO create(Hospedagem hospedagem) {
         ModelMapper modelMapper = new ModelMapper();
@@ -34,8 +36,14 @@ public class HospedagemDTO {
         dto.adultos = hospedagem.getAdultos();
         dto.criancas = hospedagem.getCriancas();
         dto.quantidadeDeQuartos = hospedagem.getQuantidadeDeQuartos();
-        dto.camaExtra = hospedagem.getCamasExtrasNaReserva().getCamaNoHotel().getTipoDeCama().getTipo();
-        dto.itemExtra = hospedagem.getItensNaReserva().getItemNoHotel().getItem().getNome();
+        if (hospedagem.getCamasExtrasNaReserva() != null) {
+        dto.camaExtra = hospedagem.getCamasExtrasNaReserva().getCamaNoHotel().getTipoDeCama() != null ? 
+                       hospedagem.getCamasExtrasNaReserva().getCamaNoHotel().getTipoDeCama().getTipo() : null;
+        }
+        if (hospedagem.getItensNaReserva() != null && hospedagem.getItensNaReserva().getItemNoHotel() != null) {
+            dto.itemExtra = hospedagem.getItensNaReserva().getItemNoHotel().getItem().getNome();
+        }
+        dto.numeroQuarto = hospedagem.getQuarto().getNumero();
 
         return dto;
     }

@@ -43,29 +43,23 @@ public class AgendamentoService {
     public void validate(Agendamento agendamento) {
         ArrayList<String> missingFields = new ArrayList<>();
 
-        if (agendamento.getHotel() == null) {
-            missingFields.add("hotel");
-        }
         if(agendamento.getHospedagem() == null) {
             missingFields.add("hospedagem");
         }
-        if(agendamento.getAgenda() == null) {
+        /*if(agendamento.getAgenda() == null) {
             missingFields.add("agenda");
-        }
+        }*/
         if(agendamento.getServico() == null) {
-            missingFields.add("servico");
+            missingFields.add("serviço");
         }
         if(agendamento.getHorarioInicio() == null || agendamento.getHorarioInicio().trim().equals("")) {
-            missingFields.add("horarioInicio");
+            missingFields.add("horário de início");
         }
         if(agendamento.getData() == null || agendamento.getData().trim().equals("")) {
             missingFields.add("data");
         }
         if(agendamento.getTrabalhador() == null) {
             missingFields.add("trabalhador");
-        }
-        if(agendamento.getReserva() == null) {
-            missingFields.add("reserva");
         }
 
         if (missingFields.size() > 0) {

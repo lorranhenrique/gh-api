@@ -23,9 +23,9 @@ public class Hospedagem {
     private boolean reserva;
     private Integer quantidadeDeQuartos;
 
-    @OneToOne
+    @ManyToOne
     private Hospede hospede;
-    @OneToOne
+    @ManyToOne
     private Hotel hotel;
     @ManyToOne
     private Quarto quarto;

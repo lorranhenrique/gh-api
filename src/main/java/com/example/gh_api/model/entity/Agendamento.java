@@ -13,20 +13,16 @@ public class Agendamento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    @OneToOne
+    @ManyToOne
     private Hospedagem hospedagem;
     @ManyToOne
     private Agenda agenda;
     @ManyToOne
-    private Reserva reserva;
-    @OneToOne
     private Trabalhador trabalhador;
     private String horarioInicio;
     private String data;
     @ManyToOne
     private Servico servico;
-    @OneToOne
-    private Hotel hotel;
 }

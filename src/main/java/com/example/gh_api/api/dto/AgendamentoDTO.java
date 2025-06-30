@@ -10,17 +10,18 @@ import org.modelmapper.ModelMapper;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AgendamentoDTO {
-    private long id;
+    private Long id;
+    private Long idHospedagem;
+    private String nomeHospede;
+    private String hotel;
+    private Long idTrabalhador;
+    //private Long idAgenda;
+    private String nomeTrabalhador;
     private String horarioInicio;
     private String data;
-    private long idServico;
-    private String nomeServico;
-    private long idTrabalhador;
-    private String nomeTrabalhador;
-    private long idHospedagem;
-    private String nomeHospede;
     private String quarto;
-    private String hotel;
+    private Long idServico;
+    private String nomeServico;
 
     public static AgendamentoDTO create(Agendamento agendamento) {
         ModelMapper modelMapper = new ModelMapper();
@@ -30,7 +31,6 @@ public class AgendamentoDTO {
         dto.nomeHospede = agendamento.getHospedagem().getHospede().getNome();
         dto.quarto = agendamento.getHospedagem().getQuarto().getTipoDeQuarto().getTipo();
         dto.data = agendamento.getData();
-        dto.hotel = agendamento.getHotel().getNome();
         return dto;
     }
 }

@@ -37,11 +37,11 @@ public class QuartoService {
     public void validate(Quarto quarto){
         ArrayList<String> missingFields = new ArrayList<>();
 
-        if (quarto.getHotel() == null || quarto.getHotel().getNome().trim().equals("")) {
+        if (quarto.getHotel() == null) {
             missingFields.add("hotel");
         }
 
-        if (quarto.getTipoDeQuarto() == null || quarto.getTipoDeQuarto().getTipo().trim().equals("")) {
+        if (quarto.getTipoDeQuarto() == null) {
             missingFields.add("tipo de quarto");
         }
 
