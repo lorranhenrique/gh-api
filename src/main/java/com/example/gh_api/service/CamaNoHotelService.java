@@ -46,7 +46,7 @@ public class CamaNoHotelService {
             missingFields.add("quantidade");
         }
 
-        if (cama.getHotel() == null || cama.getTipoDeCama().getTipo().trim().equals("")) {
+        if (cama.getHotel() == null || cama.getHotel().getNome().trim().equals("")) {
             missingFields.add("hotel");
         }
 

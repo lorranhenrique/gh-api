@@ -30,8 +30,6 @@ public class Hospedagem {
     @ManyToOne
     private Quarto quarto;
     @ManyToOne
-    private Servico servico;
-    @ManyToOne
     private CamasExtrasNaReserva camasExtrasNaReserva;
     @ManyToOne
     private ItensNaReserva itensNaReserva;
