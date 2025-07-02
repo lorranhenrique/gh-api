@@ -17,4 +17,5 @@ public class Cargo {
 
     private String nome;
     private String descricao;
+    private Float salario;
 }

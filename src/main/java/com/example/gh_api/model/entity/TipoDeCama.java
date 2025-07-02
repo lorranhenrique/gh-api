@@ -14,10 +14,9 @@ public class TipoDeCama {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String tipo;
-    private Integer quantidade;
     private Integer quantidadeAdultos;
     private Integer quantidadeCriancas;
 }

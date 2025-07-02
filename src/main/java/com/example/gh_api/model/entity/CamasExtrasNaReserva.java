@@ -12,7 +12,7 @@ public class CamasExtrasNaReserva {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne
     private Reserva reserva;

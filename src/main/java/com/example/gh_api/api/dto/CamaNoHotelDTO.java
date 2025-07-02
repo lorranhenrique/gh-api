@@ -13,7 +13,7 @@ public class CamaNoHotelDTO {
     private Long id;
     private Long idTipoDeCama;
     private String tipo;
-    private int quantidade;
+    private Integer quantidade;
     private Long idHotel;
     private String hotel;
 

@@ -16,10 +16,10 @@ public class HospedagemDTO {
     private String checkOut;
     private Long idHospede;
     private String nomeHospede;
-    private int adultos;
-    private int criancas;
+    private Integer adultos;
+    private Integer criancas;
     private Long idHotel;
-    private int quantidadeDeQuartos;
+    private Integer quantidadeDeQuartos;
     private String nomeHotel;
     private String camaExtra;
     private String itemExtra;
@@ -43,7 +43,6 @@ public class HospedagemDTO {
         if (hospedagem.getItensNaReserva() != null && hospedagem.getItensNaReserva().getItemNoHotel() != null) {
             dto.itemExtra = hospedagem.getItensNaReserva().getItemNoHotel().getItem().getNome();
         }
-        dto.numeroQuarto = hospedagem.getQuarto().getNumero();
 
         return dto;
     }

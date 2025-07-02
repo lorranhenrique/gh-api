@@ -13,7 +13,7 @@ public class TipoDeQuarto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String tipo;
     private Integer quantidadeTotal;

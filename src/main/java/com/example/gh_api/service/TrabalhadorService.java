@@ -84,11 +84,11 @@ public class TrabalhadorService{
             missingFields.add("data de nascimento");
         }
 
-        if (trabalhador.getHotel() == null || trabalhador.getNome().trim().equals("")) {
+        if (trabalhador.getHotel() == null) {
             missingFields.add("hotel");
         }
 
-        if (trabalhador.getCargo() == null || trabalhador.getNome().trim().equals("")) {
+        if (trabalhador.getCargo() == null || trabalhador.getCargo().getNome().trim().equals("")) {
             missingFields.add("cargo");
         }
 

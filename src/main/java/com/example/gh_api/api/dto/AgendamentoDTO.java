@@ -29,7 +29,6 @@ public class AgendamentoDTO {
         dto.nomeServico = agendamento.getServico().getNome();
         dto.nomeTrabalhador = agendamento.getTrabalhador().getNome();
         dto.nomeHospede = agendamento.getHospedagem().getHospede().getNome();
-        dto.quarto = agendamento.getHospedagem().getQuarto().getTipoDeQuarto().getTipo();
         dto.data = agendamento.getData();
         return dto;
     }

@@ -20,17 +20,13 @@ public class Hospedagem {
     private String checkOut;
     private Integer adultos;
     private Integer criancas;
-    private boolean reserva;
+    private Boolean reserva;
     private Integer quantidadeDeQuartos;
 
     @ManyToOne
     private Hospede hospede;
     @ManyToOne
     private Hotel hotel;
-    @ManyToOne
-    private Quarto quarto;
-    @ManyToOne
-    private Servico servico;
     @ManyToOne
     private CamasExtrasNaReserva camasExtrasNaReserva;
     @ManyToOne

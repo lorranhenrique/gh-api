@@ -49,8 +49,11 @@ public class HospedagemService {
         if (hospedagem.getHospede() == null) {
             missingFields.add("hospede");
         }
-        if (hospedagem.getQuarto() == null) {
-            missingFields.add("quarto");
+        if (hospedagem.getCamasExtrasNaReserva() == null) {
+            missingFields.add("camas extras");
+        }
+        if (hospedagem.getItensNaReserva() == null) {
+            missingFields.add("itens");
         }
         if(hospedagem.getCheckIn() == null || hospedagem.getCheckIn().trim().equals("")) {
             missingFields.add("check-in");

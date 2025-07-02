@@ -9,12 +9,12 @@ import org.modelmapper.ModelMapper;
 public class ItemNoHotelDTO {
 
     private Long id;
-    private int quantidade;
+    private Integer quantidade;
     private Long idItem;
     private String nomeItem;
     private String imagemItem;
     private String hotel;
-    private float preco;
+    private Float preco;
 
     public static ItemNoHotelDTO create(ItemNoHotel itemNoHotel) {
         ModelMapper modelMapper = new ModelMapper();
