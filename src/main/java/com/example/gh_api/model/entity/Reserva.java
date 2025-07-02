@@ -23,7 +23,7 @@ public class Reserva {
     @ManyToOne
     private Hospede hospede;
     @OneToOne (optional = true)
-    private Hospedagem hospedagem; // acho que vai roda
+    private Hospedagem hospedagem;
     @ManyToOne
     private TipoDeQuarto tipoDeQuarto;
 }

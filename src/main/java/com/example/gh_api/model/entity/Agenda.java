@@ -20,5 +20,4 @@ public class Agenda {
     private String horarioInicio;
     private String horarioFim;
     private String dias;
-
 }

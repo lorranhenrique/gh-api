@@ -18,7 +18,7 @@ public class TipoDeQuarto {
     private String tipo;
     private Integer quantidadeTotal;
     private Float preco;
-    private Integer quantidadeCamas;
+    private Integer quantidadeCamas; // Array<Long, Integer> quantidadeCamas;
     private Float tarifaBalcao;
     private String imagem;
 }
