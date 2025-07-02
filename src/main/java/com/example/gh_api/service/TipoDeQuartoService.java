@@ -49,7 +49,7 @@ public class TipoDeQuartoService {
             missingFields.add("preço");
         }
 
-        if (tipoDeQuarto.getQuantidadeCamas() == null || tipoDeQuarto.getQuantidadeCamas() < 0) {
+        if (tipoDeQuarto.getQuantidadeCamas() == null || tipoDeQuarto.getQuantidadeCamas().isEmpty()) {
             missingFields.add("quantidade camas");
         }
 

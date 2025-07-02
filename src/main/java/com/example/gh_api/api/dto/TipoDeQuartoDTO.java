@@ -1,10 +1,14 @@
 package com.example.gh_api.api.dto;
 
+import com.example.gh_api.model.entity.TipoDeCama;
 import com.example.gh_api.model.entity.TipoDeQuarto;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Data
 @AllArgsConstructor
@@ -15,7 +19,7 @@ public class TipoDeQuartoDTO {
     private String tipo;
     private Integer quantidadeTotal;
     private Float preco;
-    private Integer quantidadeCamas;
+    private Map<TipoDeCama, Integer> quantidadeCamas = new HashMap<>();
     private Float tarifaBalcao;
     private String imagem;
 
