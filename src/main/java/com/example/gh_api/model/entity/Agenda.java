@@ -13,7 +13,7 @@ public class Agenda {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
-    private long id;
+    private Long id;
     
     @ManyToOne
     private ServicoNoHotel servico;

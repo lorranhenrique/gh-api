@@ -12,8 +12,8 @@ public class TipoCamaNoQuarto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private int quantidade;
+    private Long id;
+    private Integer quantidade;
 
     @ManyToOne
     private TipoDeCama tipoDeCama;

@@ -20,7 +20,7 @@ public class Hospedagem {
     private String checkOut;
     private Integer adultos;
     private Integer criancas;
-    private boolean reserva;
+    private Boolean reserva;
     private Integer quantidadeDeQuartos;
 
     @ManyToOne

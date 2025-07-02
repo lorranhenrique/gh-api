@@ -13,7 +13,7 @@ public class ItemNoQuarto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @ManyToOne
     private Item item;
     @ManyToOne
