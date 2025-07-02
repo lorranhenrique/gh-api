@@ -49,9 +49,6 @@ public class HospedagemService {
         if (hospedagem.getHospede() == null) {
             missingFields.add("hospede");
         }
-        if (hospedagem.getQuarto() == null) {
-            missingFields.add("quarto");
-        }
         if (hospedagem.getCamasExtrasNaReserva() == null) {
             missingFields.add("camas extras");
         }

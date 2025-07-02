@@ -28,8 +28,6 @@ public class Hospedagem {
     @ManyToOne
     private Hotel hotel;
     @ManyToOne
-    private Quarto quarto;
-    @ManyToOne
     private CamasExtrasNaReserva camasExtrasNaReserva;
     @ManyToOne
     private ItensNaReserva itensNaReserva;

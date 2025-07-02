@@ -51,6 +51,10 @@ public class CargoService {
             missingFields.add("descrição");
         }
 
+        if (cargo.getSalario() == null || cargo.getSalario() < 0) {
+            missingFields.add("salario");
+        }
+
         if (missingFields.size() > 0) {
             if (missingFields.size() == 1){
                 throw new RegraNegocioException("Por favor, preencha o seguinte campo: " + missingFields.get(0) + ".");

@@ -13,8 +13,8 @@ public class TipoDeCamaDTO {
 
     private Long id;
     private String tipo;
-    private int quantidadeAdultos;
-    private int quantidadeCriancas;
+    private Integer quantidadeAdultos;
+    private Integer quantidadeCriancas;
 
     public static TipoDeCamaDTO create(TipoDeCama tipoDeCama) {
         ModelMapper modelMapper = new ModelMapper();
