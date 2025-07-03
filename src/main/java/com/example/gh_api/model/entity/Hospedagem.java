@@ -30,5 +30,5 @@ public class Hospedagem {
     @ManyToOne
     private CamasExtrasNaReserva camasExtrasNaReserva;
     @ManyToOne
-    private ItensNaReserva itensNaReserva;
+    private ItemUsadoNaHospedagem itemUsadoNaHospedagem;
 }

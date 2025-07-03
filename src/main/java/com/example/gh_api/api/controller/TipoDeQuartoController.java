@@ -42,8 +42,8 @@ public class TipoDeQuartoController {
     @PostMapping
     public ResponseEntity post(@RequestBody TipoDeQuartoDTO dto){
         try{
-            TipoDeQuarto tipoDeQuarto = convert(dto);
-            tipoDeQuarto = service.save(tipoDeQuarto);
+            //TipoDeQuarto tipoDeQuarto = convert(dto);
+            TipoDeQuarto tipoDeQuarto = service.save(dto);
             return new ResponseEntity(tipoDeQuarto, HttpStatus.CREATED);
         } catch (RegraNegocioException e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -56,9 +56,9 @@ public class TipoDeQuartoController {
             return new ResponseEntity("Tipo de quarto não encontrado", HttpStatus.NOT_FOUND);
         }
         try{
-            TipoDeQuarto tipoDeQuarto = convert(dto);
-            tipoDeQuarto.setId(id);
-            tipoDeQuarto = service.save(tipoDeQuarto);
+            //TipoDeQuarto tipoDeQuarto = convert(dto);
+            //tipoDeQuarto.setId(id);
+            TipoDeQuarto tipoDeQuarto = service.save(dto);
             return ResponseEntity.ok(tipoDeQuarto);
         } catch (RegraNegocioException e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -79,9 +79,11 @@ public class TipoDeQuartoController {
         }
     }
 
+    /*
     public TipoDeQuarto convert(TipoDeQuartoDTO dto){
         ModelMapper modelMapper = new ModelMapper();
         TipoDeQuarto tipoDeQuarto = modelMapper.map(dto, TipoDeQuarto.class);
         return tipoDeQuarto;
     }
+    */
 }

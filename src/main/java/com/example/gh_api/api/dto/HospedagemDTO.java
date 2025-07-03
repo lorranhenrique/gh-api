@@ -40,10 +40,9 @@ public class HospedagemDTO {
         dto.camaExtra = hospedagem.getCamasExtrasNaReserva().getCamaNoHotel().getTipoDeCama() != null ? 
                        hospedagem.getCamasExtrasNaReserva().getCamaNoHotel().getTipoDeCama().getTipo() : null;
         }
-        if (hospedagem.getItensNaReserva() != null && hospedagem.getItensNaReserva().getItemNoHotel() != null) {
-            dto.itemExtra = hospedagem.getItensNaReserva().getItemNoHotel().getItem().getNome();
+        if (hospedagem.getItemUsadoNaHospedagem() != null && hospedagem.getItemUsadoNaHospedagem().getItem() != null) {
+            dto.itemExtra = hospedagem.getItemUsadoNaHospedagem().getItem().getNome();
         }
-
         return dto;
     }
 }

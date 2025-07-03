@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.Map;
+import java.util.HashMap;
 
 @Entity
 @Data
@@ -18,7 +20,10 @@ public class TipoDeQuarto {
     private String tipo;
     private Integer quantidadeTotal;
     private Float preco;
-    private Integer quantidadeCamas; // Array<Long, Integer> quantidadeCamas;
+
+    @ElementCollection
+    private Map<TipoDeCama, Integer> quantidadeCamas = new HashMap<>();
+
     private Float tarifaBalcao;
     private String imagem;
 }
