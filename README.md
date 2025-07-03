@@ -2,4 +2,4 @@
 
 ## Modelagem das classes
 
-![Modelagem das classes](./docs/uml-classes.png)
+![Modelagem das classes](./docs/uml_classes.png)
