@@ -52,9 +52,6 @@ public class ReservaService {
         if (reserva.getTipoDeQuarto() == null) {
             missingFields.add("tipo de quarto");
         }
-        if (reserva.getHospedagem() == null) {
-            missingFields.add("hospedagem");
-        }
         if(reserva.getDataChegada() == null || reserva.getDataChegada().trim().equals("")) {
             missingFields.add("data de chegada");
         }

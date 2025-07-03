@@ -24,7 +24,6 @@ public class ReservaDTO {
     private String nomeTipoDeQuarto;
     private String dataChegada;
     private String dataSaida;
-    private String camaExtra;
 
     public static ReservaDTO create(Reserva reserva) {
         ModelMapper modelMapper = new ModelMapper();
@@ -35,7 +34,6 @@ public class ReservaDTO {
         dto.dataChegada = reserva.getDataChegada();
         dto.dataSaida = reserva.getDataSaida();
         dto.hotel = reserva.getHotel().getNome();
-        dto.camaExtra = reserva.getHospedagem().getCamasExtrasNaReserva().getCamaNoHotel().getTipoDeCama().getTipo();
 
         return dto;
     }
