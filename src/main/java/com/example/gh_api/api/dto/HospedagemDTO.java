@@ -25,6 +25,8 @@ public class HospedagemDTO {
     private String itemExtra;
     private Long idQuarto;
     private String numeroQuarto;
+    private Long idCamasExtrasNaReserva;
+    private Long idItemUsadoNaHospedagem;
 
     public static HospedagemDTO create(Hospedagem hospedagem) {
         ModelMapper modelMapper = new ModelMapper();
@@ -43,6 +45,14 @@ public class HospedagemDTO {
         if (hospedagem.getItemUsadoNaHospedagem() != null && hospedagem.getItemUsadoNaHospedagem().getItem() != null) {
             dto.itemExtra = hospedagem.getItemUsadoNaHospedagem().getItem().getNome();
         }
+        if (hospedagem.getCamasExtrasNaReserva() != null) {
+        
+            dto.idCamasExtrasNaReserva = hospedagem.getCamasExtrasNaReserva().getId();
+        }
+        if (hospedagem.getItemUsadoNaHospedagem() != null) {
+            dto.idItemUsadoNaHospedagem = hospedagem.getItemUsadoNaHospedagem().getId();
+        }
+
         return dto;
     }
 }
