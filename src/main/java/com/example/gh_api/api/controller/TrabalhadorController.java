@@ -29,8 +29,8 @@ public class TrabalhadorController {
 
     @Operation( summary = "Busca trabalhadores")
     @ApiResponses({
-            @ApiResponse( responseCode = "200", description = "Trabalhadores encontrado"),
-            @ApiResponse( responseCode = "404", description = "Trabalhadores não encontrado")
+            @ApiResponse( responseCode = "200", description = "Trabalhadores encontrados"),
+            @ApiResponse( responseCode = "404", description = "Trabalhadores não encontrados")
     })
     @GetMapping()
     public ResponseEntity get(){
@@ -52,7 +52,7 @@ public class TrabalhadorController {
         return ResponseEntity.ok(trabalhador.map(TrabalhadorDTO::create));
     }
 
-    @Operation( summary = "Cria trabalhadores")
+    @Operation( summary = "Cria trabalhador")
     @ApiResponses({
             @ApiResponse( responseCode = "200", description = "Trabalhador criado"),
             @ApiResponse( responseCode = "404", description = "Falha ao criar trabalhador")
@@ -68,7 +68,7 @@ public class TrabalhadorController {
         }
     }
 
-    @Operation( summary = "Atualizar trabalhadores")
+    @Operation( summary = "Atualiza trabalhador")
     @ApiResponses({
             @ApiResponse( responseCode = "200", description = "Trabalhador alterado"),
             @ApiResponse( responseCode = "404", description = "Falha ao alterar trabalhador")
@@ -88,7 +88,7 @@ public class TrabalhadorController {
         }
     }
 
-    @Operation( summary = "Deleta trabalhadores")
+    @Operation( summary = "Deleta trabalhador")
     @ApiResponses({
             @ApiResponse( responseCode = "200", description = "Trabalhador deletado"),
             @ApiResponse( responseCode = "404", description = "Falha ao deletar o trabalhador")

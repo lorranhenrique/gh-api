@@ -29,7 +29,7 @@ public class TipoDeQuartoController {
 
     private final TipoDeQuartoService service;
 
-    @Operation( summary = "Busca de tipos de quartos")
+    @Operation( summary = "Busca tipos de quarto")
     @ApiResponses({
             @ApiResponse( responseCode = "200", description = "Tipos de quarto encontrados"),
             @ApiResponse( responseCode = "404", description = "Tipos de quarto não encontrados")
@@ -40,7 +40,7 @@ public class TipoDeQuartoController {
         return ResponseEntity.ok(tipoDeQuartos.stream().map(TipoDeQuartoDTO::create).collect(Collectors.toList()));
     }
 
-    @Operation( summary = "Busca de tipo de quarto por id")
+    @Operation( summary = "Busca tipo de quarto pelo id")
     @ApiResponses({
             @ApiResponse( responseCode = "200", description = "Tipo de quarto encontrado"),
             @ApiResponse( responseCode = "404", description = "Tipo de quarto não encontrado")
@@ -53,7 +53,7 @@ public class TipoDeQuartoController {
         }
         return ResponseEntity.ok(tipoDeQuarto.map(TipoDeQuartoDTO::create));
     }
-    @Operation( summary = "Criar tipos de quarto")
+    @Operation( summary = "Cria tipo de quarto")
     @ApiResponses({
             @ApiResponse( responseCode = "200", description = "Tipo de quarto criado"),
             @ApiResponse( responseCode = "404", description = "Falha ao criar tipo de quarto")
@@ -69,7 +69,7 @@ public class TipoDeQuartoController {
         }
     }
 
-    @Operation( summary = "Atualizar tipo de quarto")
+    @Operation( summary = "Atualiza tipo de quarto")
     @ApiResponses({
             @ApiResponse( responseCode = "200", description = "Tipo de quarto atualizado"),
             @ApiResponse( responseCode = "404", description = "Falha ao atualizar tipo de quarto")
