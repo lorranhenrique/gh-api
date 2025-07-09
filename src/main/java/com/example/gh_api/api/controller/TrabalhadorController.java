@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/trabalhadores")
 @RequiredArgsConstructor
 @CrossOrigin
-@Tag(name = "Trabalhadores", description = "Gerenciador de trabalhadores")
+@Tag(name = "Trabalhador", description = "Gerenciador de trabalhadores")
 public class TrabalhadorController {
 
     private final TrabalhadorService service;
@@ -91,7 +91,7 @@ public class TrabalhadorController {
     @Operation( summary = "Deleta trabalhador")
     @ApiResponses({
             @ApiResponse( responseCode = "200", description = "Trabalhador deletado"),
-            @ApiResponse( responseCode = "404", description = "Falha ao deletar o trabalhador")
+            @ApiResponse( responseCode = "404", description = "Falha ao deletar trabalhador")
     })
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable("id") Long id) {

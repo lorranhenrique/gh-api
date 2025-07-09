@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @CrossOrigin
 
-@Tag(name = "Tipo de quarto", description = "Gerenciador de tipo de quarto")
+@Tag(name = "Tipo de quarto", description = "Gerenciador de tipos de quarto")
 public class TipoDeQuartoController {
 
     private final TipoDeQuartoService service;
@@ -92,7 +92,7 @@ public class TipoDeQuartoController {
     @Operation( summary = "Deleta tipo de quarto")
     @ApiResponses({
             @ApiResponse( responseCode = "200", description = "Tipo de quarto deletado"),
-            @ApiResponse( responseCode = "404", description = "Falha ao deletar o tipo de quarto")
+            @ApiResponse( responseCode = "404", description = "Falha ao deletar tipo de quarto")
     })
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable("id") long id) {

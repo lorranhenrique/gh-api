@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/tiposDeCama")
 @RequiredArgsConstructor
 @CrossOrigin
-@Tag(name = "Tipo de cama", description = "Gerenciador de tipo de cama")
+@Tag(name = "Tipo de cama", description = "Gerenciador de tipos de cama")
 public class TipoDeCamaController {
 
     private final TipoDeCamaService service;
@@ -72,7 +72,7 @@ public class TipoDeCamaController {
     @Operation( summary = "Atualiza tipo de cama")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Tipo de cama atualizado"),
-            @ApiResponse(responseCode = "404", description = "Tipo de cama não encontrado")
+            @ApiResponse(responseCode = "404", description = "Falha ao atualizar tipo de cama")
     })
     @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable("id") Long id, @RequestBody TipoDeCamaDTO dto){
@@ -92,7 +92,7 @@ public class TipoDeCamaController {
     @Operation(summary = "Deleta tipo de cama")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Tipo de cama deletado"),
-            @ApiResponse(responseCode = "404", description = "Falha ao deletar o tipo de cama")
+            @ApiResponse(responseCode = "404", description = "Falha ao deletar tipo de cama")
     })
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable("id") Long id) {

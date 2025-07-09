@@ -4,6 +4,10 @@ import com.example.gh_api.api.dto.ItemNoHotelDTO;
 import com.example.gh_api.exception.RegraNegocioException;
 import com.example.gh_api.model.entity.ItemNoHotel;
 import com.example.gh_api.service.ItemNoHotelService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -19,17 +23,29 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/itensNoHotel")
 @RequiredArgsConstructor
 @CrossOrigin
+@Tag(name = "Item no hotel", description = "Gerenciador de itens no hotel")
+
 public class ItemNoHotelController {
 
     private final ItemNoHotelService service;
 
 
+    @Operation(summary = "Busca itens no hotel")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Itens no hotel encontrados"),
+            @ApiResponse(responseCode = "404", description = "Itens no hotel não encontrados")
+    })
     @GetMapping()
     public ResponseEntity get(){
         List<ItemNoHotel> itemNoHotels = service.getAllItems();
         return ResponseEntity.ok(itemNoHotels.stream().map(ItemNoHotelDTO::create).collect(Collectors.toList()));
     }
 
+    @Operation(summary = "Busca item no hotel pelo id")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Item no hotel encontrado"),
+            @ApiResponse(responseCode = "404", description = "Item no hotel não encontrado")
+    })
     @GetMapping("/{id}")
     public ResponseEntity getById(@PathVariable("id") Long id){
         Optional<ItemNoHotel> itemNoHotel = service.getItemById(id);
@@ -39,6 +55,11 @@ public class ItemNoHotelController {
         return ResponseEntity.ok(itemNoHotel.map(ItemNoHotelDTO::create));
     }
 
+    @Operation(summary = "Cria item no hotel")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Item no hotel criado"),
+            @ApiResponse(responseCode = "404", description = "Falha ao criar item no hotel")
+    })
     @PostMapping
     public ResponseEntity post(@RequestBody ItemNoHotelDTO dto){
         try {           
@@ -50,6 +71,11 @@ public class ItemNoHotelController {
         }
     }
 
+    @Operation(summary = "Atualiza item no hotel")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Item no hotel atualizado"),
+            @ApiResponse(responseCode = "404", description = "Falha ao atualizar item no hotel")
+    })
     @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable("id") Long id, @RequestBody ItemNoHotelDTO dto){
         if(!service.getItemById(id).isPresent()){
@@ -65,6 +91,11 @@ public class ItemNoHotelController {
         }
     }
 
+    @Operation(summary = "Deleta item no hotel")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Item no hotel deletado"),
+            @ApiResponse(responseCode = "404", description = "Falha ao deletar item no hotel")
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<ItemNoHotel> item = service.getItemById(id);
@@ -84,5 +115,4 @@ public class ItemNoHotelController {
         ItemNoHotel itemNoHotel = modelMapper.map(dto, ItemNoHotel.class);
         return itemNoHotel;
     }
-
 }
