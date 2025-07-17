@@ -4,6 +4,10 @@ import com.example.gh_api.api.dto.HospedagemDTO;
 
 import com.example.gh_api.model.entity.Hospedagem;
 import com.example.gh_api.service.HospedagemService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -19,16 +23,28 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/hospedagens")
 @RequiredArgsConstructor
 @CrossOrigin
+@Tag(name = "Hospedagem", description = "Gerenciador de hospedagens")
+
 public class HospedagemController {
 
     private final HospedagemService service;
 
+    @Operation(summary = "Busca hospedagens")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Hospedagens encontradas"),
+            @ApiResponse(responseCode = "404", description = "Hospedagens não encontradas")
+    })
     @GetMapping()
     public ResponseEntity get(){
         List<Hospedagem> hospedagens = service.getAllHospedagem();
         return ResponseEntity.ok(hospedagens.stream().map(HospedagemDTO::create).collect(Collectors.toList()));
     }
 
+    @Operation(summary = "Busca hospedagem pelo id")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Hospedagem encontrada"),
+            @ApiResponse(responseCode = "404", description = "Hospedagem não encontrada")
+    })
     @GetMapping("/{id}")
     public ResponseEntity getById(@PathVariable("id") Long id){
         Optional<Hospedagem> hospedagens = service.getHospedagemById(id);
@@ -38,6 +54,11 @@ public class HospedagemController {
         return ResponseEntity.ok(hospedagens.map(HospedagemDTO::create));
     }
 
+    @Operation(summary = "Cria hospedagem")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Hospedagem criada"),
+            @ApiResponse(responseCode = "404", description = "Falha ao criar hospedagem")
+    })
     @PostMapping
     public ResponseEntity post(@RequestBody HospedagemDTO dto){
         try {
@@ -49,6 +70,11 @@ public class HospedagemController {
         }
     }
 
+    @Operation(summary = "Atualiza hospedagem")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Hospedagem atualizada"),
+            @ApiResponse(responseCode = "404", description = "Falha ao atualizar hospedagem")
+    })
     @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable("id") Long id, @RequestBody HospedagemDTO dto){
         if(!service.getHospedagemById(id).isPresent()){
@@ -64,6 +90,11 @@ public class HospedagemController {
         }
     }
 
+    @Operation(summary = "Deleta hospedagem")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Hospedagem deletada"),
+            @ApiResponse(responseCode = "404", description = "Falha ao deletar hospedagem")
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Hospedagem> hospedagem = service.getHospedagemById(id);

@@ -4,6 +4,10 @@ import com.example.gh_api.api.dto.AgendamentoDTO;
 import com.example.gh_api.exception.RegraNegocioException;
 import com.example.gh_api.model.entity.Agendamento;
 import com.example.gh_api.service.AgendamentoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -19,18 +23,29 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/agendamentos")
 @RequiredArgsConstructor
 @CrossOrigin
+@Tag(name = "Agendamento", description = "Gerenciador de agendamentos")
 
 public class AgendamentoController {
 
     private final AgendamentoService service;
 
 
+    @Operation(summary = "Busca agendamentos")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Agendamentos encontrados"),
+            @ApiResponse(responseCode = "404", description = "Agendamentos não encontrados")
+    })
     @GetMapping()
     public ResponseEntity get(){
         List<Agendamento> agendamentos = service.getAllAgendamento();
         return ResponseEntity.ok(agendamentos.stream().map(AgendamentoDTO::create).collect(Collectors.toList()));
     }
 
+    @Operation(summary = "Busca agendamento pelo id")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Agendamento encontrado"),
+            @ApiResponse(responseCode = "404", description = "Agendamento não encontrado")
+    })
     @GetMapping("/{id}")
     public ResponseEntity getById(@PathVariable("id") Long id){
         Optional<Agendamento> agendamento = service.getAgendamentoById(id);
@@ -40,6 +55,11 @@ public class AgendamentoController {
         return ResponseEntity.ok(agendamento.map(AgendamentoDTO::create));
     }
 
+    @Operation(summary = "Cria agendamento")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Agendamento criado"),
+            @ApiResponse(responseCode = "404", description = "Falha ao criar agendamento")
+    })
     @PostMapping
     public ResponseEntity post(@RequestBody AgendamentoDTO dto){
         try {
@@ -51,6 +71,11 @@ public class AgendamentoController {
         }
     }
 
+    @Operation(summary = "Atualiza agendamento")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Agendamento atualizado"),
+            @ApiResponse(responseCode = "404", description = "Falha ao atualizar agendamento")
+    })
     @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable("id") Long id, @RequestBody AgendamentoDTO dto){
         if(!service.getAgendamentoById(id).isPresent()){
@@ -66,6 +91,11 @@ public class AgendamentoController {
         }
     }
 
+    @Operation(summary = "Deleta agendamento")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Agendamento deletado"),
+            @ApiResponse(responseCode = "404", description = "Falha ao deletar agendamento")
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable("id") Long id) {
         Optional<Agendamento> agendamento = service.getAgendamentoById(id);

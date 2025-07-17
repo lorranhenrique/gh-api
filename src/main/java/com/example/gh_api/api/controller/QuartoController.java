@@ -4,6 +4,10 @@ import com.example.gh_api.api.dto.QuartoDTO;
 import com.example.gh_api.exception.RegraNegocioException;
 import com.example.gh_api.model.entity.Quarto;
 import com.example.gh_api.service.QuartoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -18,17 +22,28 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/quartos")
 @RequiredArgsConstructor
 @CrossOrigin
+@Tag(name = "Quarto", description = "Gerenciador de quartos")
 
 public class QuartoController {
 
     private final QuartoService service;
 
+    @Operation(summary = "Busca quartos")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Quartos encontrados"),
+            @ApiResponse(responseCode = "404", description = "Quartos não encontrados")
+    })
     @GetMapping()
     public ResponseEntity get(){
         List<Quarto> quartos = service.getAllQuartos();
         return ResponseEntity.ok(quartos.stream().map(QuartoDTO::create).collect(Collectors.toList()));
     }
 
+    @Operation(summary = "Busca quarto pelo id")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Quarto encontrado"),
+            @ApiResponse(responseCode = "404", description = "Quarto não encontrado")
+    })
     @GetMapping("/{id}")
     public ResponseEntity getById(@PathVariable("id") Long id){
         Optional<Quarto> quarto = service.getQuartoById(id);
@@ -38,6 +53,11 @@ public class QuartoController {
         return ResponseEntity.ok(quarto.map(QuartoDTO::create));
     }
 
+    @Operation(summary = "Cria quarto")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Quarto criado"),
+            @ApiResponse(responseCode = "404", description = "Falha ao criar quarto")
+    })
     @PostMapping
     public ResponseEntity post(@RequestBody QuartoDTO dto){
         try{
@@ -49,6 +69,11 @@ public class QuartoController {
         }
     }
 
+    @Operation(summary = "Atualiza quarto")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Quarto atualizado"),
+            @ApiResponse(responseCode = "404", description = "Falha ao atualizar quarto")
+    })
     @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable("id") Long id, @RequestBody QuartoDTO dto){
         if(!service.getQuartoById(id).isPresent()){
@@ -64,6 +89,11 @@ public class QuartoController {
         }
     }
 
+    @Operation(summary = "Deleta quarto")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Quarto deletado"),
+            @ApiResponse(responseCode = "404", description = "Falha ao deletar quarto")
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable("id") Long id) {
         Optional<Quarto> quarto = service.getQuartoById(id);
