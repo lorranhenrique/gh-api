@@ -1,6 +1,7 @@
 package com.example.gh_api.api.controller;
 
 import com.example.gh_api.api.dto.ReservaDTO;
+import com.example.gh_api.api.dto.TipoDeQuartoNaReservaDTO;
 import com.example.gh_api.model.entity.Reserva;
 import com.example.gh_api.service.ReservaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,7 +14,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.gh_api.exception.RegraNegocioException;
+import com.example.gh_api.model.entity.TipoDeQuarto;
+import com.example.gh_api.model.repository.TipoDeQuartoRepository;
+import com.example.gh_api.model.entity.TipoDeQuartoNaReserva;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,6 +31,7 @@ import java.util.stream.Collectors;
 public class ReservaController {
 
     private final ReservaService service;
+    private final TipoDeQuartoRepository tipoDeQuartoRepository;
 
     @Operation(summary = "Busca reservas")
     @ApiResponses({
@@ -110,6 +116,21 @@ public class ReservaController {
     public Reserva convert(ReservaDTO dto){
         ModelMapper modelMapper = new ModelMapper();
         Reserva reserva = modelMapper.map(dto, Reserva.class);
+
+        if (dto.getTipoDeQuartoNaReservaDTO() != null && !dto.getTipoDeQuartoNaReservaDTO().isEmpty()) {
+
+            reserva.setTipoDeQuartoNaReserva(new HashSet<>());
+
+            for (TipoDeQuartoNaReservaDTO tipoDeQuartoNaReservaDTO : dto.getTipoDeQuartoNaReservaDTO()) {
+
+                TipoDeQuarto tipoDeQuarto = tipoDeQuartoRepository.findById(tipoDeQuartoNaReservaDTO.getIdTipoDeQuarto())
+                        .orElseThrow(() -> new RegraNegocioException("Tipo de quarto com ID " + tipoDeQuartoNaReservaDTO.getIdTipoDeQuarto() + " não encontrado."));
+                reserva.getTipoDeQuartoNaReserva().add(new TipoDeQuartoNaReserva(reserva, tipoDeQuarto, tipoDeQuartoNaReservaDTO.getQuantidade()));
+
+            }
+        }
+
+
         return reserva;
     }
 }

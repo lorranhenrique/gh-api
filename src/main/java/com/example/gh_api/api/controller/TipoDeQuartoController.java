@@ -1,8 +1,10 @@
 package com.example.gh_api.api.controller;
 
+import com.example.gh_api.api.dto.TipoCamaNoQuartoDTO;
 import com.example.gh_api.api.dto.TipoDeQuartoDTO;
 import com.example.gh_api.exception.RegraNegocioException;
 import com.example.gh_api.model.entity.TipoDeQuarto;
+import com.example.gh_api.model.repository.TipoDeCamaRepository;
 import com.example.gh_api.service.TipoDeQuartoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -13,8 +15,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.example.gh_api.model.entity.TipoDeCama;
+import com.example.gh_api.model.entity.TipoCamaNoQuarto;
 
-
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,6 +32,7 @@ import java.util.stream.Collectors;
 public class TipoDeQuartoController {
 
     private final TipoDeQuartoService service;
+    private final TipoDeCamaRepository tipoDeCamaRepository;
 
     @Operation( summary = "Busca tipos de quarto")
     @ApiResponses({
@@ -61,9 +66,9 @@ public class TipoDeQuartoController {
     @PostMapping
     public ResponseEntity post(@RequestBody TipoDeQuartoDTO dto){
         try{
-            //TipoDeQuarto tipoDeQuarto = convert(dto);
-            TipoDeQuarto tipoDeQuarto = service.save(dto);
-            return new ResponseEntity(tipoDeQuarto, HttpStatus.CREATED);
+            TipoDeQuarto tipoDeQuarto = convert(dto);
+            tipoDeQuarto = service.save(tipoDeQuarto);
+            return new ResponseEntity(TipoDeQuartoDTO.create(tipoDeQuarto), HttpStatus.CREATED);
         } catch (RegraNegocioException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -80,9 +85,9 @@ public class TipoDeQuartoController {
             return new ResponseEntity("Tipo de quarto não encontrado", HttpStatus.NOT_FOUND);
         }
         try{
-            //TipoDeQuarto tipoDeQuarto = convert(dto);
-            //tipoDeQuarto.setId(id);
-            TipoDeQuarto tipoDeQuarto = service.save(dto);
+            TipoDeQuarto tipoDeQuarto = convert(dto);
+            tipoDeQuarto.setId(id);
+            tipoDeQuarto = service.save(tipoDeQuarto);
             return ResponseEntity.ok(tipoDeQuarto);
         } catch (RegraNegocioException e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -108,11 +113,23 @@ public class TipoDeQuartoController {
         }
     }
 
-    /*
+    
     public TipoDeQuarto convert(TipoDeQuartoDTO dto){
         ModelMapper modelMapper = new ModelMapper();
         TipoDeQuarto tipoDeQuarto = modelMapper.map(dto, TipoDeQuarto.class);
+
+        if (dto.getTipoCamaNoQuarto() != null && !dto.getTipoCamaNoQuarto().isEmpty()) {
+            tipoDeQuarto.setTipoCamaNoQuarto(new HashSet<>());
+
+            for (TipoCamaNoQuartoDTO tipoCamaNoQuartoDTO : dto.getTipoCamaNoQuarto()) {
+
+                TipoDeCama tipoDeCama = tipoDeCamaRepository.findById(tipoCamaNoQuartoDTO.getIdTipoDeCama())
+                        .orElseThrow(() -> new RegraNegocioException("Tipo de cama com ID " + tipoCamaNoQuartoDTO.getIdTipoDeCama() + " não encontrado."));
+
+                tipoDeQuarto.getTipoCamaNoQuarto().add(new TipoCamaNoQuarto(tipoDeQuarto, tipoDeCama, tipoCamaNoQuartoDTO.getQuantidade()));
+            }
+        }
         return tipoDeQuarto;
     }
-    */
+    
 }

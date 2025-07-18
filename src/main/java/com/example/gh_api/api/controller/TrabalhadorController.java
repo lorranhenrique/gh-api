@@ -3,6 +3,10 @@ package com.example.gh_api.api.controller;
 import com.example.gh_api.api.dto.TrabalhadorDTO;
 import com.example.gh_api.exception.RegraNegocioException;
 import com.example.gh_api.model.entity.Trabalhador;
+import com.example.gh_api.model.entity.Cargo;
+import com.example.gh_api.model.entity.Hotel;
+import com.example.gh_api.service.CargoService;
+import com.example.gh_api.service.HotelService;
 import com.example.gh_api.service.TrabalhadorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -26,6 +30,8 @@ import java.util.stream.Collectors;
 public class TrabalhadorController {
 
     private final TrabalhadorService service;
+    private final CargoService cargoService;
+    private final HotelService hotelService;
 
     @Operation( summary = "Busca trabalhadores")
     @ApiResponses({
@@ -110,7 +116,20 @@ public class TrabalhadorController {
     public Trabalhador convert(TrabalhadorDTO dto){
         ModelMapper modelMapper = new ModelMapper();
         Trabalhador trabalhador = modelMapper.map(dto, Trabalhador.class);
+        if (dto.getIdCargo() != null) {
+            Optional<Cargo> cargo = cargoService.getCargoById(dto.getIdCargo());
+            if (!cargo.isPresent()) {
+                throw new RegraNegocioException("Cargo não encontrado");
+            }
+            trabalhador.setCargo(cargo.get());
+        }
+        if (dto.getIdHotel() != null) {
+            Optional<Hotel> hotel = hotelService.getHotelById(dto.getIdHotel());
+            if (!hotel.isPresent()) {
+                throw new RegraNegocioException("Hotel não encontrado");
+            }
+            trabalhador.setHotel(hotel.get());
+        }
         return trabalhador;
     }
-
 }

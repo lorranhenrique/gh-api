@@ -3,14 +3,19 @@ package com.example.gh_api.model.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import java.util.Map;
-import java.util.HashMap;
+import lombok.ToString;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
+@EqualsAndHashCode(exclude = {"tipoDeQuartoNaReserva", "tipoCamaNoQuarto"})
 public class TipoDeQuarto {
 
     @Id
@@ -21,8 +26,12 @@ public class TipoDeQuarto {
     private Integer quantidadeTotal;
     private Float preco;
 
-    @ElementCollection
-    private Map<TipoDeCama, Integer> quantidadeCamas = new HashMap<>();
+    @OneToMany(mappedBy = "tipoDeQuarto")
+    private Set<TipoDeQuartoNaReserva> tipoDeQuartoNaReserva;
+
+    @OneToMany(mappedBy = "tipoDeQuarto", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private Set<TipoCamaNoQuarto> tipoCamaNoQuarto = new HashSet<>();
 
     private Float tarifaBalcao;
     private String imagem;

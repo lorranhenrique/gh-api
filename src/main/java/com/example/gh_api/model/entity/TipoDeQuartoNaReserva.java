@@ -5,30 +5,25 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(exclude = {"tipoDeCama", "tipoDeQuarto"})
-public class TipoCamaNoQuarto {
+@EqualsAndHashCode(exclude = {"reserva", "tipoDeQuarto"})
+public class TipoDeQuartoNaReserva {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer quantidade;
 
     @ManyToOne
-    @ToString.Exclude
-    private TipoDeCama tipoDeCama;
-    
+    private Reserva reserva;
     @ManyToOne
-    @ToString.Exclude
     private TipoDeQuarto tipoDeQuarto;
-
-    public TipoCamaNoQuarto(TipoDeQuarto tipoDeQuarto, TipoDeCama tipoDeCama, Integer quantidade) {
-        this.tipoDeCama = tipoDeCama;
+    private int quantidade;
+    
+    public TipoDeQuartoNaReserva(Reserva reserva, TipoDeQuarto tipoDeQuarto, int quantidade) {
+        this.reserva = reserva;
         this.tipoDeQuarto = tipoDeQuarto;
         this.quantidade = quantidade;
     }

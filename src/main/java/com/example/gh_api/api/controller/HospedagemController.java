@@ -1,8 +1,11 @@
 package com.example.gh_api.api.controller;
 
 import com.example.gh_api.api.dto.HospedagemDTO;
-
+import com.example.gh_api.api.dto.QuartoNaHospedagemDTO;
 import com.example.gh_api.model.entity.Hospedagem;
+import com.example.gh_api.model.entity.Quarto;
+import com.example.gh_api.model.entity.QuartoNaHospedagem;
+import com.example.gh_api.model.repository.QuartoRepository;
 import com.example.gh_api.service.HospedagemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -15,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.gh_api.exception.RegraNegocioException;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,6 +32,7 @@ import java.util.stream.Collectors;
 public class HospedagemController {
 
     private final HospedagemService service;
+    private final QuartoRepository quartoRepository;
 
     @Operation(summary = "Busca hospedagens")
     @ApiResponses({
@@ -112,6 +117,18 @@ public class HospedagemController {
     public Hospedagem convert(HospedagemDTO dto){
         ModelMapper modelMapper = new ModelMapper();
         Hospedagem hospedagem = modelMapper.map(dto, Hospedagem.class);
+        
+        if (dto.getQuartoNaHospedagemDTO() != null && !dto.getQuartoNaHospedagemDTO().isEmpty()) {
+            hospedagem.setQuartoNaHospedagem(new HashSet<>());
+
+            for (QuartoNaHospedagemDTO quartoNaHospedagemDTO : dto.getQuartoNaHospedagemDTO()) {
+
+                Quarto quarto = quartoRepository.findById(quartoNaHospedagemDTO.getIdQuarto())
+                        .orElseThrow(() -> new RegraNegocioException("Quarto com ID " + quartoNaHospedagemDTO.getIdQuarto() + " não encontrado."));
+
+                hospedagem.getQuartoNaHospedagem().add(new QuartoNaHospedagem(hospedagem, quarto));
+            }
+        }
         return hospedagem;
     }
 }

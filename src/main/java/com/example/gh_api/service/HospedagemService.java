@@ -2,6 +2,8 @@ package com.example.gh_api.service;
 
 import com.example.gh_api.exception.RegraNegocioException;
 import com.example.gh_api.model.entity.Hospedagem;
+import com.example.gh_api.model.entity.Quarto;
+import com.example.gh_api.model.entity.QuartoNaHospedagem;
 import com.example.gh_api.model.repository.HospedagemRepository;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Service
 public class HospedagemService {
@@ -61,17 +65,29 @@ public class HospedagemService {
         if(hospedagem.getAdultos() == null || hospedagem.getAdultos() < 0) {
             missingFields.add("adultos");
         }
-        if(hospedagem.getQuantidadeDeQuartos() == null || hospedagem.getQuantidadeDeQuartos() < 0) {
-            missingFields.add("quantidade de quartos");
-        }
 
-        if (missingFields.size() > 0) {
-            if (missingFields.size() == 1){
-                throw new RegraNegocioException("Por favor, preencha o seguinte campo: " + missingFields.get(0) + ".");
+        if (hospedagem.getQuartoNaHospedagem() == null || hospedagem.getQuartoNaHospedagem().isEmpty()) {
+            missingFields.add("quarto");
+        } else {
+            for (QuartoNaHospedagem quartoNaHospedagem : hospedagem.getQuartoNaHospedagem()) {
+                Quarto quarto = quartoNaHospedagem.getQuarto();
+                if (quarto == null) {
+                    missingFields.add("quarto");
+                }
             }
-            else {
-                throw new RegraNegocioException("Por favor, preencha os seguinte campos: " + String.join(", ", missingFields) + ".");
-            }
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        LocalDateTime checkIn;
+        LocalDateTime checkOut;
+        try {
+            checkIn = LocalDateTime.parse(hospedagem.getCheckIn(), formatter);
+            checkOut = LocalDateTime.parse(hospedagem.getCheckOut(), formatter);
+        } catch (Exception e) {
+            throw new RegraNegocioException("Formato de data inválido.");
+        }
+        
+        if (checkIn.isAfter(checkOut)) {
+            throw new RegraNegocioException("A data de check-in deve ser anterior à data de check-out.");
         }
     }
 }

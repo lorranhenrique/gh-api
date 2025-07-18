@@ -6,6 +6,9 @@ import com.example.gh_api.model.repository.AgendamentoRepository;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.*;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -70,5 +73,17 @@ public class AgendamentoService {
                 throw new RegraNegocioException("Por favor, preencha os seguinte campos: " + String.join(", ", missingFields) + ".");
             }
         }
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy'T'HH:mm");
+        LocalDateTime data;
+        try {
+            data = LocalDateTime.parse(agendamento.getData(), formatter);
+        } catch (Exception e) {
+            throw new RegraNegocioException("Data inválida. Por favor, use o formato dd/MM/yyyy'T'HH:mm.");
+        }
+        if (data.isBefore(LocalDateTime.now())) {
+            throw new RegraNegocioException("A data do agendamento não pode ser anterior à data atual.");
+        }
+
     }
 }

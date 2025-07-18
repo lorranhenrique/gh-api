@@ -6,6 +6,7 @@ import com.example.gh_api.model.entity.TipoDeQuarto;
 import com.example.gh_api.model.repository.TipoDeCamaRepository;
 import com.example.gh_api.model.repository.TipoDeQuartoRepository;
 import com.example.gh_api.model.entity.TipoDeCama;
+import com.example.gh_api.model.entity.TipoCamaNoQuarto;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,30 +35,7 @@ public class TipoDeQuartoService {
     public Optional<TipoDeQuarto> getTipoDeQuartoById(Long id) { return repository.findById(id); }
 
     @Transactional
-    public TipoDeQuarto save(TipoDeQuartoDTO dto) {
-        TipoDeQuarto tipoDeQuarto = new TipoDeQuarto();
-        tipoDeQuarto.setId(dto.getId());
-        tipoDeQuarto.setTipo(dto.getTipo());
-        tipoDeQuarto.setQuantidadeTotal(dto.getQuantidadeTotal());
-        tipoDeQuarto.setPreco(dto.getPreco());
-        tipoDeQuarto.setTarifaBalcao(dto.getTarifaBalcao());
-        tipoDeQuarto.setImagem(dto.getImagem());
-
-        Map<TipoDeCama, Integer> quantidadeCamas = new HashMap<>();
-        if (dto.getQuantidadeCamas() != null) {
-            for (Map.Entry<Long, Integer> entry : dto.getQuantidadeCamas().entrySet()) {
-                Long idCama = entry.getKey();
-
-                TipoDeCama tipoDeCama = tipoDeCamaRepository.findById(idCama)
-                        .orElseThrow(() -> new RegraNegocioException("Tipo de cama com ID " + idCama + " não encontrado."));
-                
-                Integer quantidade = entry.getValue();
-
-                quantidadeCamas.put(tipoDeCama, quantidade);
-            }
-        }
-        tipoDeQuarto.setQuantidadeCamas(quantidadeCamas);
-
+    public TipoDeQuarto save(TipoDeQuarto tipoDeQuarto) {
         validate(tipoDeQuarto);
         return repository.save(tipoDeQuarto);
     }
@@ -83,14 +61,25 @@ public class TipoDeQuartoService {
             missingFields.add("preço");
         }
 
-        if (tipoDeQuarto.getQuantidadeCamas() == null || tipoDeQuarto.getQuantidadeCamas().isEmpty()) {
-            missingFields.add("quantidade de camas");
-        }
-
         if (tipoDeQuarto.getTarifaBalcao() == null || tipoDeQuarto.getTarifaBalcao() < 0) {
             missingFields.add("tarifa balcão");
         }
 
+        if (tipoDeQuarto.getTipoCamaNoQuarto() == null || tipoDeQuarto.getTipoCamaNoQuarto().isEmpty()) {
+            missingFields.add("camas");
+        } else {
+            for (TipoCamaNoQuarto tipoCamaNoQuarto : tipoDeQuarto.getTipoCamaNoQuarto()) {
+                TipoDeCama tipoDeCama = tipoCamaNoQuarto.getTipoDeCama();
+                Integer quantidade = tipoCamaNoQuarto.getQuantidade();
+
+                if (tipoDeCama == null) {
+                    missingFields.add("tipo de cama");
+                }
+                if (quantidade == null || quantidade <= 0) {
+                    missingFields.add("quantidade de camas do tipo " + tipoDeCama.getTipo());
+                }
+            }
+        }
         if (missingFields.size() > 0) {
             if (missingFields.size() == 1){
                 throw new RegraNegocioException("Por favor, preencha o seguinte campo: " + missingFields.get(0) + ".");

@@ -30,8 +30,8 @@ public class ItemController {
 
     @Operation(summary = "Busca itens")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Itens encontrados"),
-            @ApiResponse(responseCode = "404", description = "Itens não encontrados")
+    @ApiResponse(responseCode = "200", description = "Itens encontrados"),
+    @ApiResponse(responseCode = "404", description = "Itens não encontrados")
     })
     @GetMapping()
     public ResponseEntity get() {
@@ -41,8 +41,8 @@ public class ItemController {
 
     @Operation(summary = "Busca item pelo id")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Item encontrado"),
-            @ApiResponse(responseCode = "404", description = "Item não encontrado")
+    @ApiResponse(responseCode = "200", description = "Item encontrado"),
+    @ApiResponse(responseCode = "404", description = "Item não encontrado")
     })
     @GetMapping("/{id}")
     public ResponseEntity getById(@PathVariable("id") Long id) {
@@ -55,8 +55,8 @@ public class ItemController {
 
     @Operation(summary = "Cria item")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Item criado"),
-            @ApiResponse(responseCode = "404", description = "Falha ao criar item")
+    @ApiResponse(responseCode = "200", description = "Item criado"),
+    @ApiResponse(responseCode = "404", description = "Falha ao criar item")
     })
     @PostMapping
     public ResponseEntity post(@RequestBody ItemDTO dto) {
@@ -71,8 +71,8 @@ public class ItemController {
 
     @Operation(summary = "Atualiza item")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Item atualizado"),
-            @ApiResponse(responseCode = "404", description = "Falha ao atualizar item")
+    @ApiResponse(responseCode = "200", description = "Item atualizado"),
+    @ApiResponse(responseCode = "404", description = "Falha ao atualizar item")
     })
     @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable("id") Long id, @RequestBody ItemDTO dto) {
@@ -91,8 +91,8 @@ public class ItemController {
 
     @Operation(summary = "Deleta item")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Item deletado"),
-            @ApiResponse(responseCode = "404", description = "Falha ao deletar item")
+    @ApiResponse(responseCode = "200", description = "Item deletado"),
+    @ApiResponse(responseCode = "404", description = "Falha ao deletar item")
     })
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable("id") Long id) {
