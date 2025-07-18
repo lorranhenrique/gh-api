@@ -1,9 +1,15 @@
 package com.example.gh_api.api.controller;
 
 import com.example.gh_api.api.dto.CamaNoHotelDTO;
+
 import com.example.gh_api.exception.RegraNegocioException;
+
 import com.example.gh_api.model.entity.CamaNoHotel;
+import com.example.gh_api.model.entity.TipoDeCama;
+import com.example.gh_api.model.entity.Hotel;
 import com.example.gh_api.service.CamaNoHotelService;
+import com.example.gh_api.service.TipoDeCamaService;
+import com.example.gh_api.service.HotelService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -27,6 +33,8 @@ import java.util.stream.Collectors;
 public class CamaNoHotelController {
 
     private final CamaNoHotelService service;
+    private final TipoDeCamaService tipoDeCamaService;
+    private final HotelService hotelService;
 
     @Operation(summary = "Busca camas no hotel")
     @ApiResponses({
@@ -111,6 +119,20 @@ public class CamaNoHotelController {
     public CamaNoHotel convert(CamaNoHotelDTO dto){
         ModelMapper modelMapper = new ModelMapper();
         CamaNoHotel camaNoHotel = modelMapper.map(dto, CamaNoHotel.class);
+        if (dto.getIdTipoDeCama() != null) {
+            Optional<TipoDeCama> tipoDeCama = tipoDeCamaService.getTipoCamaById(dto.getIdTipoDeCama());
+            if (!tipoDeCama.isPresent()) {
+                throw new RegraNegocioException("Tipo de cama não encontrado");
+            }
+            camaNoHotel.setTipoDeCama(tipoDeCama.get());
+        }
+        if (dto.getIdHotel() != null) {
+            Optional<Hotel> hotel = hotelService.getHotelById(dto.getIdHotel());
+            if (!hotel.isPresent()) {
+                throw new RegraNegocioException("Hotel não encontrado");
+            }
+            camaNoHotel.setHotel(hotel.get());
+        }
         return camaNoHotel;
     }
 }
