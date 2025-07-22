@@ -1,5 +1,10 @@
 # gh-api
 
-## Modelagem das classes
+Para rodar o back-end, rode os seguintes comandos:
 
-![Modelagem das classes](./docs/uml-classes.png)
+1 -> mvn wrapper:wrappe (necessário apenas a primeira vez)
+2 -> chmod +x mvnw (necessário apenas a primeira vez)
+3 -> systemctl status postgresql
+  Se estiver desligado:
+    sudo systemctl start postgresql
+4 -> ./mvnw clean install && ./mvnw spring-boot:run
