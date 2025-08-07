@@ -17,8 +17,8 @@ public class Agendamento {
 
     @ManyToOne
     private Hospedagem hospedagem;
-    @ManyToOne
-    private Agenda agenda;
+    //@ManyToOne
+    //private Agenda agenda;
     @ManyToOne
     private Trabalhador trabalhador;
     private String horarioInicio;

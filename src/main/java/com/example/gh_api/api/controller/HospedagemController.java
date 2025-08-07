@@ -1,7 +1,9 @@
 package com.example.gh_api.api.controller;
 
+import com.example.gh_api.api.dto.AgendamentoDTO;
 import com.example.gh_api.api.dto.HospedagemDTO;
 import com.example.gh_api.api.dto.QuartoNaHospedagemDTO;
+import com.example.gh_api.model.entity.Agendamento;
 import com.example.gh_api.model.entity.Hospedagem;
 import com.example.gh_api.model.entity.Quarto;
 import com.example.gh_api.model.entity.QuartoNaHospedagem;
@@ -18,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.gh_api.exception.RegraNegocioException;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -57,6 +60,36 @@ public class HospedagemController {
             return new ResponseEntity("Hospedagem não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(hospedagens.map(HospedagemDTO::create));
+    }
+
+    @GetMapping("/{id}/quartos")
+    @Operation(summary = "Busca quartos na hospedagem pelo id")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Quartos na hospedagem encontrados"),
+            @ApiResponse(responseCode = "404", description = "Quartos na hospedagem não encontrados")
+    })
+    public ResponseEntity getQuartosNaHospedagem(@PathVariable("id") Long id) {
+        Optional<Hospedagem> hospedagem = service.getHospedagemById(id);
+        if (!hospedagem.isPresent()) {
+            return new ResponseEntity("Hospedagem não encontrada", HttpStatus.NOT_FOUND);
+        }
+        List<QuartoNaHospedagem> quartos = hospedagem.get().getQuartoNaHospedagem();
+        return ResponseEntity.ok(quartos.stream().map(QuartoNaHospedagemDTO::create).collect(Collectors.toList()));
+    }
+
+    @GetMapping("/{id}/agendamentos")
+    @Operation(summary = "Busca agendamentos na hospedagem pelo id")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Agendamentos na hospedagem encontrados"),
+            @ApiResponse(responseCode = "404", description = "Agendamentos na hospedagem não encontrados")
+    })
+    public ResponseEntity getAgendamentosNaHospedagem(@PathVariable("id") Long id) {
+        Optional<Hospedagem> hospedagem = service.getHospedagemById(id);
+        if (!hospedagem.isPresent()) {
+            return new ResponseEntity("Hospedagem não encontrada", HttpStatus.NOT_FOUND);
+        }
+        List<Agendamento> agendamentos = hospedagem.get().getAgendamentos();
+        return ResponseEntity.ok(agendamentos.stream().map(AgendamentoDTO::create).collect(Collectors.toList()));
     }
 
     @Operation(summary = "Cria hospedagem")
@@ -119,7 +152,7 @@ public class HospedagemController {
         Hospedagem hospedagem = modelMapper.map(dto, Hospedagem.class);
         
         if (dto.getQuartoNaHospedagemDTO() != null && !dto.getQuartoNaHospedagemDTO().isEmpty()) {
-            hospedagem.setQuartoNaHospedagem(new HashSet<>());
+            hospedagem.setQuartoNaHospedagem(new ArrayList<>());
 
             for (QuartoNaHospedagemDTO quartoNaHospedagemDTO : dto.getQuartoNaHospedagemDTO()) {
 

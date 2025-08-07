@@ -1,6 +1,8 @@
 package com.example.gh_api.api.dto;
 
 import com.example.gh_api.model.entity.Hospedagem;
+import com.example.gh_api.model.repository.QuartoRepository;
+
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Data;
@@ -24,17 +26,14 @@ public class HospedagemDTO {
     private Integer adultos;
     private Integer criancas;
     private Long idHotel;
-    private Integer quantidadeDeQuartos;
     private String nomeHotel;
-    private String camaExtra;
-    private String itemExtra;
-    private Long idQuarto;
-    private String numeroQuarto;
-    private Long idCamasExtrasNaReserva;
-    private Long idItemUsadoNaHospedagem;
     private List<Long> quartoNaHospedagem; // cadastro
     private List<QuartoNaHospedagemDTO> quartoNaHospedagemDTO; // inserir
     private List<String> quartos; // exibir
+    private Float valorQuartos;
+    private Float valorServicos;
+    private Float valorTotal;
+    private List<AgendamentoDTO> agendamentos;
 
     public static HospedagemDTO create(Hospedagem hospedagem) {
         HospedagemDTO dto = new HospedagemDTO();
@@ -54,6 +53,22 @@ public class HospedagemDTO {
         dto.setQuartos(hospedagem.getQuartoNaHospedagem().stream()
             .map(nToN -> nToN.getQuarto().getNumero() + " - " + nToN.getQuarto().getTipoDeQuarto().getTipo())
             .collect(Collectors.toList()));
+        dto.valorQuartos = hospedagem.getQuartoNaHospedagem().stream()
+            .map(quarto -> quarto.getQuarto().getTipoDeQuarto().getPreco())
+            .reduce(0f, Float::sum);
+        dto.agendamentos = hospedagem.getAgendamentos().stream()
+            .map(AgendamentoDTO::create)
+            .collect(Collectors.toList());
+        dto.quartoNaHospedagemDTO = hospedagem.getQuartoNaHospedagem().stream()
+            .map(QuartoNaHospedagemDTO::create)
+            .collect(Collectors.toList());
+
+        dto.valorServicos = hospedagem.getAgendamentos().stream()
+            .map(agendamento -> agendamento.getServico().getPreco())
+            .reduce(0f, Float::sum);
+
+        dto.valorTotal = dto.valorQuartos + dto.valorServicos;
+
         return dto;
     }
 }

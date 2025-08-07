@@ -7,7 +7,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Data
@@ -35,6 +38,11 @@ public class Hospedagem {
     @ManyToOne
     private ItemUsadoNaHospedagem itemUsadoNaHospedagem;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "hospedagem", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<QuartoNaHospedagem> quartoNaHospedagem = new HashSet<>();
+    private List<QuartoNaHospedagem> quartoNaHospedagem;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "hospedagem", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Agendamento> agendamentos;
 }

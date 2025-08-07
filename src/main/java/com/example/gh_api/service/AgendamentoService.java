@@ -1,13 +1,22 @@
 package com.example.gh_api.service;
 
+import com.example.gh_api.api.dto.AgendamentoDTO;
 import com.example.gh_api.exception.RegraNegocioException;
 import com.example.gh_api.model.entity.Agendamento;
+import com.example.gh_api.model.entity.Hospedagem;
+import com.example.gh_api.model.entity.Servico;
+import com.example.gh_api.model.entity.Trabalhador;
 import com.example.gh_api.model.repository.AgendamentoRepository;
+import com.example.gh_api.model.repository.HospedagemRepository;
+import com.example.gh_api.model.repository.ServicoRepository;
+import com.example.gh_api.model.repository.TrabalhadorRepository;
+
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.*;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +26,19 @@ import java.util.Optional;
 @Service
 public class AgendamentoService {
 
-    private AgendamentoRepository repository;
+    private final AgendamentoRepository repository;
+    private final HospedagemRepository hospedagemRepository;
+    private final TrabalhadorRepository trabalhadorRepository;
+    private final ServicoRepository servicoRepository;
 
-    public AgendamentoService(AgendamentoRepository repository) {
+    public AgendamentoService(AgendamentoRepository repository,
+                             HospedagemRepository hospedagemRepository,
+                             TrabalhadorRepository trabalhadorRepository,
+                             ServicoRepository servicoRepository) {
         this.repository = repository;
+        this.hospedagemRepository = hospedagemRepository;
+        this.trabalhadorRepository = trabalhadorRepository;
+        this.servicoRepository = servicoRepository;
     }
 
     public List<Agendamento> getAllAgendamento() {
@@ -32,7 +50,21 @@ public class AgendamentoService {
     }
 
     @Transactional
-    public Agendamento save(Agendamento agendamento) {
+    public Agendamento save(AgendamentoDTO dto) {
+        Hospedagem hospedagem = hospedagemRepository.findById(dto.getIdHospedagem())
+                .orElseThrow(() -> new RegraNegocioException("Hospedagem não encontrada com o ID: " + dto.getIdHospedagem()));
+        Trabalhador trabalhador = trabalhadorRepository.findById(dto.getIdTrabalhador())
+                .orElseThrow(() -> new RegraNegocioException("Trabalhador não encontrado com o ID: " + dto.getIdTrabalhador()));
+
+        Servico servico = servicoRepository.findById(dto.getIdServico())
+                .orElseThrow(() -> new RegraNegocioException("Serviço não encontrado com o ID: " + dto.getIdServico()));
+        
+        Agendamento agendamento = new Agendamento();
+        agendamento.setHospedagem(hospedagem);
+        agendamento.setTrabalhador(trabalhador);
+        agendamento.setServico(servico);
+        agendamento.setHorarioInicio(dto.getHorarioInicio());
+        agendamento.setData(dto.getData());
         validate(agendamento);
         return repository.save(agendamento);
     }
@@ -74,14 +106,14 @@ public class AgendamentoService {
             }
         }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy'T'HH:mm");
-        LocalDateTime data;
+        ZonedDateTime data;
+
         try {
-            data = LocalDateTime.parse(agendamento.getData(), formatter);
+            data = ZonedDateTime.parse(agendamento.getData());
         } catch (Exception e) {
             throw new RegraNegocioException("Data inválida. Por favor, use o formato dd/MM/yyyy'T'HH:mm.");
         }
-        if (data.isBefore(LocalDateTime.now())) {
+        if (data.isBefore(ZonedDateTime.now())) {
             throw new RegraNegocioException("A data do agendamento não pode ser anterior à data atual.");
         }
 

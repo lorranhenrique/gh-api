@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Configuration;
 @OpenAPIDefinition(
         info = @Info(
                 title = "GH-API",
-                version = "3.5.2",
-                description = "API documentation for a hotel management"
+                version = "1.0",
+                description = "API documentation for a hotel management system"
         )
 )
 @Configuration

@@ -35,6 +35,10 @@ public class HospedagemService {
     @Transactional
     public Hospedagem save(Hospedagem hospedagem) {
         validate(hospedagem);
+        hospedagem.getQuartoNaHospedagem().forEach(quartoNaHospedagem -> {
+            Quarto quarto = quartoNaHospedagem.getQuarto();
+            quarto.setSituacao("Reservado");
+        });
         return repository.save(hospedagem);
     }
 
@@ -88,6 +92,13 @@ public class HospedagemService {
         
         if (checkIn.isAfter(checkOut)) {
             throw new RegraNegocioException("A data de check-in deve ser anterior à data de check-out.");
+        }
+
+        for (QuartoNaHospedagem quartoNaHospedagem : hospedagem.getQuartoNaHospedagem()) {
+            Quarto quarto = quartoNaHospedagem.getQuarto();
+            if (quarto.getSituacao() != "Disponível") {
+                throw new RegraNegocioException("O quarto " + quarto.getNumero() + " não está disponível.");
+            }
         }
     }
 }

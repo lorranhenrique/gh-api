@@ -63,8 +63,8 @@ public class AgendamentoController {
     @PostMapping
     public ResponseEntity post(@RequestBody AgendamentoDTO dto){
         try {
-            Agendamento agendamento = convert(dto);
-            agendamento = service.save(agendamento);
+            //Agendamento agendamento = convert(dto);
+            Agendamento agendamento = service.save(dto); // antes era passado agendamento
             return new ResponseEntity(AgendamentoDTO.create(agendamento), HttpStatus.CREATED);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -82,9 +82,10 @@ public class AgendamentoController {
             return new ResponseEntity("Agendamento não encontrado", HttpStatus.NOT_FOUND);
         }
         try {
-            Agendamento agendamento = convert(dto);
+            //Agendamento agendamento = convert(dto);
+            Agendamento agendamento = service.save(dto);
             agendamento.setId(id);
-            agendamento = service.save(agendamento);
+            //agendamento = repository.save(agendamento);
             return ResponseEntity.ok(AgendamentoDTO.create(agendamento));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

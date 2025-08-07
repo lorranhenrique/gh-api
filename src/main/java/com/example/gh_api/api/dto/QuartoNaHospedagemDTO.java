@@ -13,13 +13,14 @@ import com.example.gh_api.model.entity.QuartoNaHospedagem;
 public class QuartoNaHospedagemDTO {
 
     private Long idQuarto;
+    private String numeroQuarto;
 
     public static QuartoNaHospedagemDTO create(QuartoNaHospedagem quartoNaHospedagem) {
         ModelMapper modelMapper = new ModelMapper();
 
         QuartoNaHospedagemDTO dto = modelMapper.map(quartoNaHospedagem, QuartoNaHospedagemDTO.class);
         dto.idQuarto = quartoNaHospedagem.getQuarto().getId();
-
+        dto.numeroQuarto = quartoNaHospedagem.getQuarto().getNumero();
         return dto;
     }
 }
